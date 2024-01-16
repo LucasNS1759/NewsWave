@@ -3,7 +3,10 @@ const axios = require("axios");
 
 const saveCountriesController = async () => {
   const count = await Countrie.count();
-  if (count > 0) return;
+  
+  if (count > 0) {
+    return;
+  }
 
   const apiCountries = await axios.get("https://restcountries.com/v3/all");
 
