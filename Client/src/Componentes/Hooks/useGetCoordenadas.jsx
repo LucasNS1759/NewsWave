@@ -12,7 +12,7 @@ const searchLocalizacion = async (debouncedInput, setInputCiudad, actualizarDato
           setInputCiudad(response.data);
           // return response.data; // Asegúrate de devolver datos válidos
         }
-       return  // Puedes ajustar esto según tu lógica
+       return ; // Puedes ajustar esto según tu lógica
       }
   
       if (!debouncedInput) {
