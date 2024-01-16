@@ -24,7 +24,7 @@ const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME,DB_DEPLOY,DB_USER_DEPLOY,DB_PASSW
 
 
 //Render
-const sequelize = new Sequelize(DB_DEPLOY, {
+const sequelize = new Sequelize("postgres://mundo_noticia_user:ykczNj6eitxv6tUi9cO9u9hKRmQvJHLK@dpg-cmjbbufqd2ns73fln9a0-a/mundo_noticia", {
   logging: false,
   native: false,
   dialectOptions: {
