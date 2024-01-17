@@ -14,7 +14,7 @@ server.use(cookieParser());
 
 server.use(
   cors({
-    origin: "https://mundo-noticias22-9yfio2q60-lucasns1759.vercel.app", // Asegúrate de que coincida con el origen de tu aplicación
+    origin: "https://mundo-noticias22.vercel.app", // Asegúrate de que coincida con el origen de tu aplicación
 
     // origin: "http://localhost:5173", // Asegúrate de que coincida con el origen de tu aplicación
     credentials: true, // Habilita el envío de cookies con credenciales si es necesario
@@ -23,7 +23,7 @@ server.use(
 server.use(
   "/usuario",
   cors({
-    origin: "https://mundo-noticias22-9yfio2q60-lucasns1759.vercel.app", // Asegúrate de que coincida con el origen de tu aplicación
+    origin: "https://mundo-noticias22.vercel.app", // Asegúrate de que coincida con el origen de tu aplicación
 
     // origin: "http://localhost:5173", // Asegúrate de que coincida con el origen de tu aplicación
     credentials: true, // Habilita el envío de cookies con credenciales si es necesario
@@ -37,7 +37,7 @@ server.use(helmet());
 server.use((req, res, next) => {
   res.header(
     "Access-Control-Allow-Origin",
-    "https://mundo-noticias22-9yfio2q60-lucasns1759.vercel.app"
+    "https://mundo-noticias22.vercel.app"
   );
   // res.header("Access-Control-Allow-Origin", "http://localhost:5173"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
