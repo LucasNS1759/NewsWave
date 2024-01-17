@@ -10,23 +10,25 @@ const session = require("express-session");
 const passport = require("passport");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 
-
 server.use(cookieParser());
 
 server.use(
   cors({
-    origin: "http://localhost:5173", // Asegúrate de que coincida con el origen de tu aplicación
+    origin: "https://mundo-noticias22.vercel.app", // Asegúrate de que coincida con el origen de tu aplicación
+
+    // origin: "http://localhost:5173", // Asegúrate de que coincida con el origen de tu aplicación
     credentials: true, // Habilita el envío de cookies con credenciales si es necesario
   })
-); 
-server.use("/usuario",
+);
+server.use(
+  "/usuario",
   cors({
-    origin: "http://localhost:5173", // Asegúrate de que coincida con el origen de tu aplicación
+    origin: "https://mundo-noticias22.vercel.app", // Asegúrate de que coincida con el origen de tu aplicación
+
+    // origin: "http://localhost:5173", // Asegúrate de que coincida con el origen de tu aplicación
     credentials: true, // Habilita el envío de cookies con credenciales si es necesario
   })
-); 
-
-
+);
 
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
@@ -42,8 +44,6 @@ server.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
-
-
 
 // server.use(
 //   "http://localhost:3001", // Define una ruta local a la que se dirigirán las solicitudes de proxy
@@ -68,9 +68,7 @@ server.use(
 server.use(passport.initialize());
 server.use(passport.session());
 
-
-
-server.use("/",  routes);
+server.use("/", routes);
 
 // Error catching endware.
 server.use((err, req, res, next) => {
