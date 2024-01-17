@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
+import { obtenerDiaYFechaActual } from "../../helpers/obtenerFechaActual";
 import Clima from "../Clima/Clima";
-import {obtenerDiaYFechaActual} from "../../helpers/obtenerFechaActual"
 
 const SubNavBar = () => {
  

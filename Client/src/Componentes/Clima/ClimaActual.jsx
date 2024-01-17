@@ -10,7 +10,7 @@ const ClimaActual = () => {
   const getClimaActual = async () => {
     try {
       const response = await axios(
-        `http://localhost:3001/clima?latitude=${state && state?.coordenadas?.latitud}&longitude=${state && state?.coordenadas?.longitud}`
+        `/clima?latitude=${state && state?.coordenadas?.latitud}&longitude=${state && state?.coordenadas?.longitud}`
       );
       if (response.status === 200) {
         setClimaDeHoy(response.data);

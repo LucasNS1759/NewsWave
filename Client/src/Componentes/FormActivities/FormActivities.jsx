@@ -19,7 +19,7 @@ const FormActivities = () => {
 
   const getActividades = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/activities");
+      const response = await axios.get("/activities");
       if (response.status === 200) {
         setActividades(response.data);
       }
@@ -31,7 +31,7 @@ const FormActivities = () => {
   const getPaises = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/countries/onlyCountries"
+        "/countries/onlyCountries"
       );
       console.log(response);
 
@@ -91,7 +91,7 @@ const FormActivities = () => {
     console.log(actividad?.paisesdIds[0].idPaises)
     
     try {
-      const response = await axios.post("http://localhost:3001/activities", {
+      const response = await axios.post("/activities", {
         Nombre: actividad.Nombre,
         Dificultad: actividad.Dificultad,
         Duracion: actividad.Duracion,

@@ -20,7 +20,7 @@ const Login = () => {
     e.preventDefault();
     try {
       // const response =
-      const response = await axios.post("http://localhost:3001/usuario/login", {
+      const response = await axios.post("/usuario/login", {
         email: data.email,
         password: data.password,
       });
@@ -42,7 +42,7 @@ const Login = () => {
   };
   
   const handleGoogleAuth = () => {
-    window.location.href = "http://localhost:3001/usuario/auth/google";
+    window.location.href = "/usuario/auth/google";
   };
 
   return (
@@ -120,7 +120,7 @@ const Login = () => {
         </form>
         <div className="mb-3">
           <button onClick={handleGoogleAuth}
-            // href="http://localhost:3001/usuario/auth/google"
+            // href="/usuario/auth/google"
             className="flex flex-wrap justify-center w-full border border-gray-300 hover:border-gray-500 px-2 py-1.5 rounded-md"
           >
             <img

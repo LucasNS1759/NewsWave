@@ -5,7 +5,7 @@ const searchLocalizacion = async (debouncedInput, setInputCiudad, actualizarDato
     try {
       if (debouncedInput) {
         const response = await axios.get(
-          `http://localhost:3001/clima/localizacion?cityName=${debouncedInput}&codigoDeEstado=${state?.datosZona?.codigoDeEstado}&codigoDePais=AR`
+          `/clima/localizacion?cityName=${debouncedInput}&codigoDeEstado=${state?.datosZona?.codigoDeEstado}&codigoDePais=AR`
         );
         if (response.data) {
           console.log(response.data);
@@ -18,7 +18,7 @@ const searchLocalizacion = async (debouncedInput, setInputCiudad, actualizarDato
       if (!debouncedInput) {
         console.log(state.datosZona);
         const response = await axios.get(
-          `http://localhost:3001/clima/localizacion?cityName=${state?.datosZona?.ciudad}&codigoDeEstado=${state?.datosZona?.codigoDeEstado}&codigoDePais=AR`
+          `/clima/localizacion?cityName=${state?.datosZona?.ciudad}&codigoDeEstado=${state?.datosZona?.codigoDeEstado}&codigoDePais=AR`
         );
   
         if (response.data) {

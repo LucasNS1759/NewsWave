@@ -18,7 +18,7 @@ const SingUp = () => {
   e.preventDefault()
   
   try {
-    const response = await axios.post("http://localhost:3001/usuario/singUp",{
+    const response = await axios.post("/usuario/singUp",{
     email: user.email,
     password: user.password
     })

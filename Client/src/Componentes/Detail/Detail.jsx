@@ -12,7 +12,7 @@ const Detail = () => {
   const [monedas, setMonedas] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:3001/countries/${id}`)
+    fetch(`/countries/${id}`)
       .then((response) => response.json())
       .then((data) => {
         console.log(data);

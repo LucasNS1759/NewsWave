@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import SubNoticias from "./SubNoticias";
-import NoticiasGrupoDeTres from "../NoticiasGrupoDeTres/NoticiasGrupoDeTres";
+import NoticiasGrupoDeTres from "./NoticiasGrupoDeTres";
 import { useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux/userSlice";
-import SubNavBar from "../SubNavBar/SubNavBar";
 import Loading from "../Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
+import SubNavBar from "../NavBar/SubNavBar"
 
 const HomeNoticias = () => {
-  const [noticias, setNoticias] = useState([]);
+  const [noticias] = useState([]);
   const [ultimasNoticias, setUltimasNoticias] = useState("");
   const [loading, setLoading] = useState(true);
   const location = useLocation();

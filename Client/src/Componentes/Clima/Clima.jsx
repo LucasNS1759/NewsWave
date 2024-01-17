@@ -25,7 +25,7 @@ const Clima = () => {
     if (location && ubicacion) {
       axios
         .get(
-          `http://localhost:3001/clima?latitude=${location?.latitude}&longitude=${location?.longitude}`
+          `/clima?latitude=${location?.latitude}&longitude=${location?.longitude}`
         )
         .then((response) => {
           setWeatherData(response.data);
@@ -37,7 +37,7 @@ const Clima = () => {
     } else if (!ubicacion && location === null) {
       axios
         .get(
-          `http://localhost:3001/clima?latitude=${state.latitud}&longitude=${state.longitud}`
+          `/clima?latitude=${state.latitud}&longitude=${state.longitud}`
         )
         .then((response) => {
           setWeatherData(response.data);

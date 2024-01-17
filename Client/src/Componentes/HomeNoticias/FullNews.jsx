@@ -20,7 +20,7 @@ const FullNews = () => {
     try {
       const response = await axios.get(api);
       if (!response.data.news.length) {
-        let api = `http://localhost:3001/noticias/fullNews?category=${categoria}&language=en`;
+        let api = `/noticias/fullNews?category=${categoria}&language=en`;
         getFullNoticias(api);
       }
       if (response.status === 200) {
@@ -32,7 +32,7 @@ const FullNews = () => {
         error.response.data.message ===
         `Tiempo de espera agotado para la búsqueda en  para la categoría ${categoria}` || error.status === 501 
       ) {
-        let api = `http://localhost:3001/noticias/fullNews?category=${categoria}&language=en`;
+        let api = `/noticias/fullNews?category=${categoria}&language=en`;
         getFullNoticias(api);
       }
 
@@ -50,18 +50,18 @@ const FullNews = () => {
     });
     // if (fullNews) return;
     if (categoria === "Latest News") {
-      let api = `http://localhost:3001/noticias?`;
+      let api = `/noticias?`;
       getFullNoticias(api);
     } else {
       let api = keyWords
-        ? `http://localhost:3001/noticias/fullNews?keyWords=${keyWords}`
-        : `http://localhost:3001/noticias/fullNews?category=${categoria}`;
+        ? `/noticias/fullNews?keyWords=${keyWords}`
+        : `/noticias/fullNews?category=${categoria}`;
       getFullNoticias(api);
     }
   }, [categoria, keyWords]);
 
   /********************************************** */
-  const [noticiaPorPagina, setNoticiaPorPagina] = useState(6);
+  const [noticiaPorPagina] = useState(6);
   const [paginaActual, setPaginaActual] = useState(1);
 
   const indiceDeLaUltimaPagina = paginaActual * noticiaPorPagina;

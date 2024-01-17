@@ -43,7 +43,7 @@ const Nav = () => {
     window.localStorage.removeItem("userId");
     
     window.location.reload();
-    await axios.get("http://localhost:3001/usuario/logOut", {
+    await axios.get("/usuario/logOut", {
       withCredentials: true,
     });
   };
@@ -68,7 +68,7 @@ const Nav = () => {
           </div>
 
 
-      <a href="/HomeNoticia" className="text-5xl font-bold text-center text-gray-700 dark:text-white xl:ml-72 ">Mundo Noticia</a>
+      <a href="/" className="text-5xl font-bold text-center text-gray-700 dark:text-white xl:ml-72 ">Mundo Noticia</a>
       
          
             <div className="hover:cursor-pointer sm:hidden">
@@ -85,7 +85,7 @@ const Nav = () => {
               </li>
                 <li>
                   <a
-                    href="/HomeNoticia"
+                    href="/"
                     className="text-gray-700 hover:text-indigo-600 text-md "
                   >
                     Home

@@ -78,7 +78,7 @@ const FiltroDePaises = () => {
   useEffect(() => {
     if (!activities) {
       try {
-        fetch(`http://localhost:3001/activities`)
+        fetch(`/activities`)
           .then((response) => response.json())
           .then((data) => {
             setActivities(data);

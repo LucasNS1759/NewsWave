@@ -48,7 +48,7 @@ const Paises = () => {
 
   const getCounries = async () => {
     const response = await axios.get(
-      `http://localhost:3001/countries?pagina=${state?.pagina}&nombreComun=${state?.nombreComun}&continente=${state?.continente}&actividad=${state?.actividad}&orden=${state?.orden}&tipoDeOrden=${state?.tipoDeOrden}`
+      `/countries?pagina=${state?.pagina}&nombreComun=${state?.nombreComun}&continente=${state?.continente}&actividad=${state?.actividad}&orden=${state?.orden}&tipoDeOrden=${state?.tipoDeOrden}`
     );
     return response.data;
   };

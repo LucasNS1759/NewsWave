@@ -21,16 +21,7 @@ const SeccionClimaExtendido = () => {
   const useClimaQuery = useQuery({
     queryKey: ["getClima", state.coordenadas, actualizarCoordenadas],
     queryFn: () => getClima(latitud, longitud),
-    // enabled: false,
   });
-
-  // useEffect(() => {
-  //   // Lógica para cargar los datos si aún no están en caché
-  //   if (!useClimaQuery.data) {
-  //     useClimaQuery.refetch();
-  //   }
-  //   return;
-  // }, [useClimaQuery, useClimaQuery.data, useClimaQuery.refetch]);
 
   if (useClimaQuery.isLoading) {
     return <Loading />;
