@@ -16,10 +16,10 @@ import Paises from "./Componentes/Paises/Paises";
 import SeccionClima from "./Componentes/Clima/SeccionClima";
 
 //Instancia de axios para Render.
-// axios.defaults.baseURL = "https://mundo-noticia.onrender.com";
+axios.defaults.baseURL = "https://mundo-noticia.onrender.com";
 
 //Instancia de axios para trabajo local:
-axios.defaults.baseURL = "http://localhost:3001";
+// axios.defaults.baseURL = "http://localhost:3001";
 
 function App() {
   const location = useLocation();
