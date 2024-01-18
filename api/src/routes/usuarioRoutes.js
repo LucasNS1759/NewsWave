@@ -26,7 +26,7 @@ usuarioRoutes.get("/logOut", (req, res) => {
 
   // Redirige o responde de acuerdo a tus necesidades
   // Puedes redirigir al usuario a la página de inicio de sesión, por ejemplo
-  res.redirect("http://localhost:5173/login");
+  res.redirect("https://mundo-noticias22.vercel.app/login");
 });
 // http://localhost:3001/usuario/auth/google/callback
 module.exports = usuarioRoutes;
