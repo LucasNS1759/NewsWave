@@ -43,7 +43,7 @@ passport.use(
     {
       clientID: CLIENT_ID,
       clientSecret:SECRET_CLIENT,
-      callbackURL: "https://mundo-noticia.onrender.com/usuario/auth/google/callback",
+      callbackURL: "http://localhost:3001/usuario/auth/google/callback",
     },
     async (accessToken, refreshToken, profile, done) => {
       try {

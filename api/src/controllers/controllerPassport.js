@@ -21,7 +21,7 @@ const localLogin = (req, res, next) => {
     });
 
     return res.redirect(
-      `https://mundo-noticia.onrender.com/usuario/login-success?userId=${user.dataValues.id}`
+      `http://localhost:3001/usuario/login-success?userId=${user.dataValues.id}`
     );
   })(req, res, next);
 };
@@ -37,7 +37,7 @@ const googleCallback = (req, res, next) => {
       // Almacena el token en una cookie
       res.cookie("Token", token, { httpOnly: true, SameSite: "None" });
 
-      return res.redirect(`https://mundo-noticias22.vercel.app/HomeNoticia?login=${true}&userId=${user.dataValues.id}`);
+      return res.redirect(`http://localhost:5173/HomeNoticia?login=${true}&userId=${user.dataValues.id}`);
     }
   })(req, res, next);
 };
