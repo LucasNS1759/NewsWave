@@ -5,34 +5,27 @@ const path = require("path");
 
 const { DB_USER, DB_PASSWORD, DB_HOST, DB_NAME,DB_DEPLOY,DB_USER_DEPLOY,DB_PASSWORD_DEPLOY,DB_HOST_DEPLOY } = process.env;
 
-// const sequelize = new Sequelize(
-//   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-//   {
-//     logging: false, // set to console.log to see the raw SQL queries
-//     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//   }
-// );
+const sequelize = new Sequelize(
+  `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
+  {
+    logging: false, // set to console.log to see the raw SQL queries
+    native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+  }
+);
 
-// const sequelize = new Sequelize(
-//   `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
-//   {
-//     logging: false, // set to console.log to see the raw SQL queries
-//     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
-//   }
-// );
 
 
 
 //Render
-const sequelize = new Sequelize("postgres://mundo_noticia_user:ykczNj6eitxv6tUi9cO9u9hKRmQvJHLK@dpg-cmjbbufqd2ns73fln9a0-a.ohio-postgres.render.com/mundo_noticia", {
-  logging: false,
-  native: false,
-  dialectOptions: {
-    ssl: {
-      require: true,
-    },
-  },
-});
+// const sequelize = new Sequelize("postgres://mundo_noticia_user:ykczNj6eitxv6tUi9cO9u9hKRmQvJHLK@dpg-cmjbbufqd2ns73fln9a0-a.ohio-postgres.render.com/mundo_noticia", {
+//   logging: false,
+//   native: false,
+//   dialectOptions: {
+//     ssl: {
+//       require: true,
+//     },
+//   },
+// });
 
 const basename = path.basename(__filename);
 
