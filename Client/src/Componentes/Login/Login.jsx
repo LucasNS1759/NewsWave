@@ -42,7 +42,7 @@ const Login = () => {
   };
   
   const handleGoogleAuth = () => {
-    window.location.href = "/usuario/auth/google";
+    window.location.href = "https://mundo-noticia.onrender.com/usuario/auth/google";
   };
 
   return (
