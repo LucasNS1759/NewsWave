@@ -36,9 +36,7 @@ const Clima = () => {
       return;
     } else if (!ubicacion && location === null) {
       axios
-        .get(
-          `/clima?latitude=${state.latitud}&longitude=${state.longitud}`
-        )
+        .get(`/clima?latitude=${state.latitud}&longitude=${state.longitud}`)
         .then((response) => {
           setWeatherData(response.data);
         })
@@ -50,16 +48,10 @@ const Clima = () => {
 
   return (
     <div>
-      {/* {location && (
-          <p>
-            Latitude: {location.latitude}, Longitude: {location.longitude}
-          </p>
-        )} */}
-
       {weatherData && (
-        <div className=" inline-flex gap-2">
+        <div className=" xl:inline-flex  md:inline-flex  sm:inline-flex  gap-2">
           <img
-            className="w-6 h-6 inline mr-1"
+            className="w-8 h-8 inline mr-1"
             src={
               weatherData &&
               `https://openweathermap.org/img/w/${weatherData.weather[0]?.icon}.png`
@@ -68,8 +60,6 @@ const Clima = () => {
           />
           <p>{weatherData.main.temp}°C</p>
           <h2> {" " + weatherData.name}</h2>
-          {/* <p>Description: {weatherData.weather[0].description}</p> */}
-          {/* Agrega más detalles del tiempo según la estructura de datos proporcionada por el servicio */}
         </div>
       )}
     </div>

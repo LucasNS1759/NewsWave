@@ -1,31 +1,87 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux/userSlice";
+import { useFormik } from "formik";
+import * as yup from "yup";
+import Swal from "sweetalert2";
+import FormEmaIlPasswordInput from "./FormEmaIlPasswordInput";
+import RememberMeAndForgotPassword from "./RememberMeAndForgotPassword";
+
+const schema = yup.object().shape({
+  email: yup.string().email("email invalido"),
+  password: yup.string().min(8),
+});
 
 const Login = () => {
+  const { handleSubmit, handleChange, errors, handleBlur, touched, values } =
+    useFormik({
+      initialValues: {
+        email: "",
+        password: "",
+      },
+      onSubmit: async (values) => {
+        await hadnlerSubmitLogin(values);
+      },
+      validationSchema: schema,
+    });
+
+  const [message, setMessage] = useState(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
+  const [rememberMe, setRememberMe] = useState(false);
 
-  const handlerOnchangeData = (e) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+  const handlerCheckBoxChange = () => {
+    setRememberMe(!rememberMe);
+    window.localStorage.setItem("checkRemember", !rememberMe);
   };
 
-  const hadnlerSubmitLogin = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    const rememberMeValue =
+      JSON.parse(window.localStorage.getItem("checkRemember")) == true;
+    const savedEmail =
+      JSON.parse(window.localStorage.getItem("rememberEmail")) || null;
+    setRememberMe(rememberMeValue);
+    values.email = savedEmail;
+  }, []);
+
+  useEffect(() => {
+    const login = JSON.parse(window.localStorage.getItem("login"));
+    console.log(login);
+    return login ? navigate("/") : navigate("/login");
+  }, [navigate]);
+
+  const hadnlerSubmitLogin = async (values) => {
     try {
-      // const response =
+      if (values.email.length < 1 && values.password.length < 1) {
+        // Mostrar mensaje al usuario para llenar los campos correctamente
+        Swal.fire({
+          title: "Incomplete Fields",
+          text: "All fields are required",
+          icon: "error",
+          button: "ok",
+          });
+          setMessage("Please fill in all fields correctly.");
+          return;
+      }
       const response = await axios.post("/usuario/login", {
-        email: data.email,
-        password: data.password,
+        email: values.email,
+        password: values.password,
       });
       if (response.status === 200) {
-        console.log(response.data);
+        if (
+          JSON.parse(
+            window.localStorage.getItem("checkRemember", !rememberMe)
+          ) == true
+        ) {
+          window.localStorage.setItem(
+            "rememberEmail",
+            JSON.stringify(values.email)
+          );
+        } else {
+          window.localStorage.removeItem("rememberEmail");
+        }
         dispatch(setLogin(response.data.succe));
         window.localStorage.setItem("login", true);
         window.localStorage.setItem(
@@ -36,18 +92,24 @@ const Login = () => {
         navigate("/");
       }
     } catch (error) {
-      console.log(error);
-      window.alert(error);
+      Swal.fire({
+        title: "Oops, an error occurred",
+        text: error.response.data.message,
+        icon: "error",
+        button: "accept",
+        })
+     
     }
   };
-  
+
   const handleGoogleAuth = () => {
-    window.location.href = "http://localhost:3001/usuario/auth/google";
+    window.localStorage.removeItem("checkRemember");
+    window.localStorage.removeItem("rememberEmail");
+    window.location.href = "http://localhost:3002/usuario/auth/google";
   };
 
   return (
     <div className="bg-gray-100 flex justify-center items-center h-screen">
-      {/* <!-- Left: Image --> */}
       <div className="w-1/2 h-screen hidden lg:block">
         <img
           src="/logo.jpeg"
@@ -55,72 +117,27 @@ const Login = () => {
           className="object-cover w-full h-full"
         />
       </div>
-      {/* <!-- Right: Login Form --> */}
       <div className="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
-        <h1 className="text-2xl font-semibold mb-4">Login</h1>
-        <form>
-          {/* <!-- Username Input --> */}
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600">
-              Email
-            </label>
-            <input
-              type="text"
-              //   id="email"
-              placeholder="escriba su Email..."
-              name="email"
-              onChange={handlerOnchangeData}
-              value={data?.email}
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-              autoComplete="off"
-            />
-          </div>
-          {/* <!-- Password Input --> */}
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600">
-              Password
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              onChange={handlerOnchangeData}
-              placeholder="Escriba su Contraseña..."
-              value={data.password}
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-              autoComplete="off"
-            />
-          </div>
-          {/* <!-- Remember Me Checkbox --> */}
-          <div className="mb-4 flex items-center">
-            <input
-              type="checkbox"
-              id="remember"
-              name="remember"
-              className="text-blue-500"
-            />
-            <label htmlFor="remember" className="text-gray-600 ml-2">
-              Remember Me
-            </label>
-          </div>
-          {/* <!-- Forgot Password Link --> */}
-          <div className="mb-6 text-blue-500">
-            <a href="#" className="hover:underline">
-              Forgot Password?
-            </a>
-          </div>
-          {/* <!-- Login Button --> */}
-          <button
-            onClick={(e) => hadnlerSubmitLogin(e)}
-            type="submit"
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full"
-          >
-            Login
-          </button>
-        </form>
+        <h1 className="text-2xl font-extrabold mb-4">Login</h1>
+        <FormEmaIlPasswordInput
+          handleBlur={handleBlur}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          values={values}
+          touched={touched}
+          errors={errors}
+          message={message}
+          btnTitle={"Login"}
+        >
+          <RememberMeAndForgotPassword
+            handlerCheckBoxChange={handlerCheckBoxChange}
+            rememberMe={rememberMe}
+          />
+        </FormEmaIlPasswordInput>
         <div className="mb-3">
-          <button onClick={handleGoogleAuth}
-            // href="http://localhost:3001/usuario/auth/google"
+          <button
+            onClick={handleGoogleAuth}
+            // href="http://localhost:3002/usuario/auth/google"
             className="flex flex-wrap justify-center w-full border border-gray-300 hover:border-gray-500 px-2 py-1.5 rounded-md"
           >
             <img
@@ -131,10 +148,10 @@ const Login = () => {
           </button>
         </div>
         <div className="text-center">
-          <span className="text-xs text-gray-400 font-semibold">
-            Dont have account?
+          <span className="text-sm text-gray-400 font-bold">
+            Dont have account?{" "}
           </span>
-          <a href="/SingUp" className="text-xs font-semibold text-purple-700">
+          <a href="/SingUp" className="text-sm font-extrabold text-purple-700">
             Sign up
           </a>
         </div>

@@ -6,10 +6,11 @@ const SubNavBar = () => {
  
 
   return (
-    <div className="flex px-4 py-1 font-bold text-gray-500 justify-between align-middle mt-32 border-solid bg-slate-100">
+    <div className="xl:flex lg:flex md:flex px-4 py-1 font-bold text-gray-500 justify-between align-middle text-center mt-32 border-solid bg-slate-100 sm:flex ">
+    
       {obtenerDiaYFechaActual()}
       <Link to={"/FullNews?dolar=dolar&categoria=finance"}>
-        <span>Dolar Hoy</span>
+        <p>Dollar Today</p>
       </Link>
       <Clima />
     </div>

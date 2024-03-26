@@ -6,7 +6,7 @@ const ClimaExtendidoPorDia = ({climaActual,pronosticoCorto,carga,setClimaActualH
     <div className="lg:my-3 bg-gray-800 text-white p-8 lg:rounded-r-lg w-full">
       <div className="flex justify-between w-64 mb-4 ">
         <div className="w-auto font-bold uppercase text-90">
-          Estado
+          State
         </div>
         <div className="w-auto text-right">
           {" "}
@@ -27,7 +27,7 @@ const ClimaExtendidoPorDia = ({climaActual,pronosticoCorto,carga,setClimaActualH
       </div>
       <div className="flex justify-between w-64 mb-8 ">
         <div className="w-auto font-bold uppercase text-90">
-          Viento
+          Wind
         </div>
         <div className="w-auto text-right">
           {climaActual
@@ -58,7 +58,7 @@ const ClimaExtendidoPorDia = ({climaActual,pronosticoCorto,carga,setClimaActualH
                   <br />
                   <strong className="text-xl">{dia.tempMax}</strong>
                   <p className="text-xs text-gray-500">
-                    Sensacion <br /> Termica {dia.sensacionTermica}
+                  Feeling <br /> Ends  {dia.sensacionTermica}
                   </p>
                 </div>
                 <div className="w-full place-items-end border-t-2 border-gray-100 mt-2">
@@ -66,8 +66,8 @@ const ClimaExtendidoPorDia = ({climaActual,pronosticoCorto,carga,setClimaActualH
                     onClick={openModal}
                     className="text-indigo-600 text-xs font-medium focus:outline-none"
                   >
-                    Pronostico <br />
-                    por hora
+                    Hourly  <br />
+                    forecast
                   </button>
                 </div>
               </div>

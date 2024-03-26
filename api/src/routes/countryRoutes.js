@@ -5,7 +5,7 @@ const authMiddleWare = require("../middleWare/authMiddleWare")
 const countryRoutes = Router()
 
 countryRoutes.get("/",getCountriesHandler)
-countryRoutes.get("/onlyCountries",authMiddleWare,getOnlyCountriesHandler)
+countryRoutes.get("/onlyCountries",authMiddleWare.verifyToken,getOnlyCountriesHandler)
 
 countryRoutes.get("/saveDataApi",saveCountriesHandlers)
 countryRoutes.get("/:id" ,getDetailHandler )

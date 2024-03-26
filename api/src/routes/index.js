@@ -5,8 +5,9 @@ const noticiasRoutes = require("../routes/noticiasRoutes");
 const usuarioRoutes = require('./usuarioRoutes');
 const dolarRoutes = require("./dolarRoutes")
 const climaRoutes = require("./climaRoutes");
-const reviewsRoutes = require("./reviewsRoutes")
-
+const reviewsRoutes = require("./reviewsRoutes");
+const subscriptionRoutes = require('./subscriptionRoutes');
+const { verifyToken } = require("../middleWare/authMiddleWare");
 
 
 
@@ -24,6 +25,7 @@ router.use("/usuario", usuarioRoutes)
 router.use("/dolar",dolarRoutes)
 router.use("/clima",climaRoutes)
 router.use("/review", reviewsRoutes)
+router.use("/subscription", verifyToken, subscriptionRoutes)
 
 
 

@@ -16,7 +16,7 @@ const getDetailCountrieController = async (id) => {
       },
     ],
   });
-
+console.log(response)
   return response;
 };
 

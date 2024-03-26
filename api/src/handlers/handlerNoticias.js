@@ -1,6 +1,8 @@
 require("dotenv").config();
 const { NOTICIAS_KEY } = process.env;
 const axios = require("axios");
+//POR PROBLEMAS DE LA API QUE YA NO ME TRAE NOTICIAS EN ESPAÑOL TUVE Q HARDCODEAR PARA Q SOLO ME BUSQUE NOTICIAS EN INGLES
+
 
 const timeout = (ms, keyWords, category, language) => {
   return new Promise((_, reject) => {
@@ -35,16 +37,14 @@ const handlerNoticias = async (req, res) => {
     "world",
     "sports",
     "finance",
-
     "politics",
     "health",
-    
   ];
 
   const apiBaseUrl = `https://api.currentsapi.services/v1/latest-news`;
 
   const getCategoryApi = (category) => {
-    return `${apiBaseUrl}?keywords=${keyWords}&category=${category}&language=${language}&page_size=${pageSize}&apiKey=${NOTICIAS_KEY}`;
+    return `${apiBaseUrl}?keywords=${keyWords}&category=${category}&language=${"en"}&page_size=${pageSize}&apiKey=${NOTICIAS_KEY}`;
   };
 
   const categoryResponses = {};
@@ -98,7 +98,7 @@ const handlerNoticias = async (req, res) => {
 const handlerUltimasNoticias = async (req, res) => {
   try {
     const response = await axios.get(
-      `https://api.currentsapi.services/v1/latest-news?language=es&page_size=5&apiKey=${NOTICIAS_KEY}`
+      `https://api.currentsapi.services/v1/latest-news?language=en&page_size=5&apiKey=${NOTICIAS_KEY}`
     );
     res.status(200).json(response.data.news);
   } catch (error) {
@@ -107,19 +107,19 @@ const handlerUltimasNoticias = async (req, res) => {
 };
 
 const handlerFullNews = async (req, res) => {
-  const { category, language = "es", keyWords } = req.query;
-
+  const { category, language = "en", keyWords } = req.query;
+console.log(category,keyWords)
   try {
     const response = keyWords
       ? await Promise.race([
           axios.get(
-            `https://api.currentsapi.services/v1/search?keywords=${keyWords}&language=${language}&country=ar&apiKey=${NOTICIAS_KEY}`
+            `https://api.currentsapi.services/v1/search?keywords=${keyWords}&apiKey=${NOTICIAS_KEY}`
           ),
-          timeout(6000, keyWords, "", language),
+          timeout(10000, keyWords, "", language),
         ])
       : await Promise.race([
           axios.get(
-            `https://api.currentsapi.services/v1/latest-news?language=${language}&category=${category}&page_size=50&apiKey=${NOTICIAS_KEY}`
+            `https://api.currentsapi.services/v1/latest-news?language=${"en"}&category=${category}&page_size=50&apiKey=${NOTICIAS_KEY}`
           ),
           timeout(6000, "", category, ""),
         ]);

@@ -1,98 +1,67 @@
+import { categories } from "../../helpers/dataFiltrosNoticias.js";
+import NewsSubscription from "../NewsSubscription/NewsSubscription.jsx";
 
 const Footer = () => {
   return (
-    <footer className="border-t mt-12 pt-12 pb-32 px-4 lg:px-0">
-    <div className="flex flex-wrap">
-      <div className="w-full lg:w-2/5">
-        <p className="text-gray-600 hidden lg:block p-0 lg:pr-12">
-          Boisterous he on understood attachment as entreaties ye
-          devonshire. In mile an form snug were been sell. Extremely ham any
-          his departure for contained curiosity defective. Way now
-          instrument had eat diminution melancholy expression sentiments
-          stimulated.
-        </p>
-      </div>
+    <footer className="border-t bg-gray-100 px-6 py-12 lg:px-20 lg:py-16">
+    <div className="flex flex-wrap justify-between">
+      <section className="w-full lg:w-1/4 py-2 my-2">
+        <h6 className="font-semibold text-gray-800 mb-4">Get Informed</h6>
+        <ul className="flex justify-around">
+          <li>
+            <a href="/clima" className="block text-gray-600 hover:text-blue-500 py-1">
+            Weather
+            </a>
+          </li>
+          <li>
+            <a href="/FullNews?dolar=dolar&categoria=finance" className="block text-gray-600 hover:text-blue-500 py-1">
+              Dollar
+            </a>
+          </li>
+       
+        </ul>
+      </section>
 
-      <div className="w-full mt-6 lg:mt-0 md:w-1/2 lg:w-1/5">
-        <h6 className="font-semibold text-gray-700 mb-4">Company</h6>
-        <ul>
+      <section className="w-full lg:w-1/4">
+        <h6 className="font-semibold text-gray-800 mb-4">Sections</h6>
+        <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-2">
+          {categories &&
+            categories.map((category, index) => {
+              return (
+                <li key={index}>
+                  <a href={`/FullNews?categoria=${category}`} className="block text-gray-600 hover:text-blue-500 py-1">
+                    {category}
+                  </a>
+                </li>
+              );
+            })}
+        </ul>
+      </section>
+
+      <section className="w-full lg:w-1/4 py-2 my-2">
+        <h6 className="font-semibold text-gray-800 mb-4">My Networks</h6>
+        <ul className="flex justify-around">
           <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              Team
-            </a>{" "}
+            <a href="#" className="text-gray-600 hover:text-blue-500">
+              Git Hub
+            </a>
           </li>
           <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              About us
-            </a>{" "}
+            <a href="#" className="text-gray-600 hover:text-blue-500">
+              Linkedin
+            </a>
           </li>
           <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              Press
-            </a>{" "}
+            <a href="#" className="text-gray-600 hover:text-blue-500">
+              Slack
+            </a>
           </li>
         </ul>
-      </div>
-
-      <div className="w-full mt-6 lg:mt-0 md:w-1/2 lg:w-1/5">
-        <h6 className="font-semibold text-gray-700 mb-4">Content</h6>
-        <ul>
-          <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              Blog
-            </a>{" "}
-          </li>
-          <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              Privacy Policy
-            </a>{" "}
-          </li>
-          <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              Terms & Conditions
-            </a>{" "}
-          </li>
-          <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              Documentation
-            </a>{" "}
-          </li>
-        </ul>
-      </div>
-
-      <div className="w-full mt-6 lg:mt-0 md:w-1/2 lg:w-1/5">
-        <h6 className="font-semibold text-gray-700 mb-4">Company</h6>
-        <ul>
-          <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              Team
-            </a>{" "}
-          </li>
-          <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              About us
-            </a>{" "}
-          </li>
-          <li>
-            {" "}
-            <a href="#" className="block text-gray-600 py-2">
-              Press
-            </a>{" "}
-          </li>
-        </ul>
-      </div>
+      </section>
     </div>
+    <NewsSubscription/>
   </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

@@ -9,31 +9,31 @@ const routes = require("./routes/index.js");
 const session = require("express-session");
 const passport = require("passport");
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const cron = require("node-cron");
+const { sendNewsSubscribers } = require("./handlers/handlerSubscription.js");
 
-
-server.use(cookieParser());
 
 server.use(
   cors({
-    origin: "http://localhost:5173", // Asegúrate de que coincida con el origen de tu aplicación
+    origin: "http://localhost:5174", // Asegúrate de que coincida con el origen de tu aplicación
     credentials: true, // Habilita el envío de cookies con credenciales si es necesario
   })
-); 
-server.use("/usuario",
+);
+server.use(
+  "/usuario",
   cors({
-    origin: "http://localhost:5173", // Asegúrate de que coincida con el origen de tu aplicación
+    origin: "http://localhost:5174", // Asegúrate de que coincida con el origen de tu aplicación
     credentials: true, // Habilita el envío de cookies con credenciales si es necesario
   })
-); 
+);
 
-
-
+server.use(cookieParser());
 server.use(bodyParser.urlencoded({ extended: true, limit: "50mb" }));
 server.use(bodyParser.json({ limit: "50mb" }));
 server.use(morgan("dev"));
 server.use(helmet());
 server.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173"); // update to match the domain you will make the request from
+  res.header("Access-Control-Allow-Origin", "http://localhost:5174"); // update to match the domain you will make the request from
   res.header("Access-Control-Allow-Credentials", "true");
   res.header(
     "Access-Control-Allow-Headers",
@@ -42,20 +42,6 @@ server.use((req, res, next) => {
   res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
   next();
 });
-
-
-
-// server.use(
-//   "http://localhost:3001", // Define una ruta local a la que se dirigirán las solicitudes de proxy
-//   createProxyMiddleware({
-//     target: "http://localhost:3001/usuario/auth/google", // La URL de destino, en este caso, la URL de autenticación de Google
-//     changeOrigin: true, // Cambiar el encabezado 'Host' a la URL de destino
-//     pathRewrite: {
-//       "^/proxy": "", // Elimina el prefijo '/proxy' en la URL de destino
-//     },
-//     // Otras opciones de configuración, si es necesario
-//   })
-// );
 
 server.use(
   session({
@@ -67,10 +53,12 @@ server.use(
 
 server.use(passport.initialize());
 server.use(passport.session());
-
-
-
-server.use("/",  routes);
+// Cron job para ejecutar sendNewsEmails cada día a las 8 a.m.
+cron.schedule("16 18 * * *", () => {
+  console.log("Consultando nuevas noticias y enviando correos electrónicos...");
+  sendNewsSubscribers();
+});
+server.use("/", routes);
 
 // Error catching endware.
 server.use((err, req, res, next) => {

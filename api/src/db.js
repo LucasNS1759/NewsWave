@@ -58,6 +58,8 @@ const { Activity } = sequelize.models;
 const { User } = sequelize.models;
 const { Review } = sequelize.models;
 
+const { Reset_tokens_black_list } = sequelize.models;
+
 // Aca vendrian las relaciones
 // Product.hasMany(Reviews);
 

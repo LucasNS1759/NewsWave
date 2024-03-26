@@ -29,6 +29,33 @@ module.exports = (sequelize) => {
           },
         },
       },
+      subscription: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+      category_subscription: {
+        type: DataTypes.ENUM([
+          "regional",
+          "technology",
+          "lifestyle",
+          "business",
+          "general",
+          "programming",
+          "science",
+          "entertainment",
+          "world",
+          "sports",
+          "finance",
+          "academia",
+          "politics",
+          "health",
+          "opinion",
+          "food",
+          "game",
+          "last News"
+        ]),
+        allowNull: true,
+      },
     },
 
     {

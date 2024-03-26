@@ -1,27 +1,31 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Calificacion from "../Calificacion/Calificacion";
-
+import axios from "axios";
 import StatsReview from "../Review/StatsReview";
 import Reviews from "../Review/Reviews";
 import InfoDetailPaises from "./InfoDetailPaises";
 
 const Detail = () => {
   const { id } = useParams();
+  console.log(id);
   const [detailCountrie, setDetailCountrie] = useState(null);
   const [monedas, setMonedas] = useState(null);
 
+  const getCountrieDetail = async () => {
+    try {
+      const response = await axios.get(`/countries/${id}`);
+      if (response.data) {
+        setDetailCountrie(response.data);
+        setMonedas(Object.entries(response.data?.moneda));
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    fetch(`/countries/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        console.log(data);
-        setDetailCountrie(data);
-        setMonedas(Object.entries(data?.moneda));
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    getCountrieDetail();
     return () => {
       setDetailCountrie(null);
     };

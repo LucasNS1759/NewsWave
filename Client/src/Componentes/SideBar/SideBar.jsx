@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import NewsSubscription from "../NewsSubscription/NewsSubscription";
 
 const SideBar = () => {
   const navigate = useNavigate();
@@ -43,6 +44,7 @@ const SideBar = () => {
 
   const searchKeyword = () => {
     closeSidebar();
+    setInput("");
     navigate(`/FullNews?keyWords=${input}`);
   };
 
@@ -123,7 +125,7 @@ const SideBar = () => {
                     </button>
                   </div>
                   <div className="mt-6 px-4">
-                    <p className="ml-2 text-lg text-gray-400">Noticias</p>
+                    <p className="ml-2 text-lg text-gray-400">News</p>
 
                     <hr />
                   </div>
@@ -169,7 +171,7 @@ const SideBar = () => {
                           onClick={closeSidebar}
                           className="ml-2 text-lg  text-gray-400"
                         >
-                          Clima
+                          Weather
                         </p>
                       </Link>
                     </div>
@@ -182,28 +184,15 @@ const SideBar = () => {
                           onClick={closeSidebar}
                           className="ml-2 text-lg text-gray-400"
                         >
-                          Dolar
+                          Dollar
                         </p>
                       </Link>
                     </div>
 
                     <hr />
-
-                    <div className="mt-8 mb-3 px-4 pb-4">
-                      <Link to={"/paises"}>
-                        <p
-                          onClick={closeSidebar}
-                          className="ml-2 text-lg text-gray-400"
-                        >
-                          Informacion sobre Paises
-                        </p>
-                      </Link>
-                    </div>
-                    <hr />
-                    
                   </div>
                   {/* Sidebar Footer */}
-                 
+               <NewsSubscription closeSidebar={closeSidebar}/>
                 </div>
               </div>
             </section>
@@ -237,7 +226,7 @@ const SideBar = () => {
               ></path>
             </g>
           </svg>{" "}
-          Secciones
+      Sections
         </button>
       </div>
     </div>

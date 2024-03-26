@@ -11,16 +11,16 @@ const NoticiasGrupoDeTres = ({ noticiasGrupo,titulo,key }) => {
           to={`/FullNews?categoria=${titulo && titulo}`}
           className=" hover:bg-green-200 underline text-blue-500 px-3 py-1 rounded cursor-pointer"
         >
-          Ver mas
+          More
         </Link>
       </div>
-      <div className="block space-x-0 lg:flex lg:space-x-6">
+      <div className="block space-x-0 lg:flex md:flex lg:space-x-6">
         {noticiasGrupo &&
           noticiasGrupo?.map((noticia) => {
             return (
               <div
                 key={noticia.id}
-                className="rounded w-full lg:w-1/2 lg:w-1/3 p-4 lg:p-0"
+                className="rounded w-full lg:w-1/2  p-4 lg:p-0"
               >
                 <img
                   src={noticia && 
@@ -44,7 +44,7 @@ const NoticiasGrupoDeTres = ({ noticiasGrupo,titulo,key }) => {
                     className="inline-block py-2 rounded underline text-blue-500 mt-2 ml-auto"
                   >
                     {" "}
-                  Nota completa
+                 Full News
                   </a>
                 </div>
               </div>

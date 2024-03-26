@@ -2,10 +2,13 @@ import { useState } from "react";
 import axios from "axios";
 import { useFormik } from "formik";
 import * as yup from "yup";
+import Swal from "sweetalert";
+import FormEmaIlPasswordInput from "./FormEmaIlPasswordInput";
+import RememberMeAndForgotPassword from "./RememberMeAndForgotPassword";
 
 const schema = yup.object().shape({
   email: yup.string().email("email invalido"),
-  password: yup.string().min(8)
+  password: yup.string().min(8),
 });
 
 const SingUp = () => {
@@ -24,21 +27,41 @@ const SingUp = () => {
   const [message, setMessage] = useState(null);
 
   const onClickSignUp = async (values) => {
-  console.log(values)
+    console.log(values);
     try {
       if (values.email.length < 1 && values.password.length < 1) {
         // Mostrar mensaje al usuario para llenar los campos correctamente
-
-        setMessage("Por favor, llena todos los campos correctamente.");
+        Swal({
+          title: "Incomplete Fields",
+          text: "All fields are required",
+          icon: "error",
+          button: "ok",
+          })
+          setMessage("Please fill in all fields correctly.")
         return;
       }
       const response = await axios.post("/usuario/singUp", {
         email: values.email,
         password: values.password,
       });
+      console.log(response.data);
+      Swal({
+        title: response.data.response,
+        text: "Click the button to go to the Login page",
+        icon: "success",
+        button: "ok",
+      }).then(() => {
+        window.location.href = "http://localhost:5174/login";
+      });
 
       setMessage(response.data.response);
     } catch (error) {
+      Swal({
+        title: "Error",
+        text: error.response.data.error,
+        icon: "error",
+        button: "ok",
+      });
       setMessage(error.response.data.error);
     }
   };
@@ -55,67 +78,24 @@ const SingUp = () => {
       </div>
       {/* <!-- Right: Login Form --> */}
       <div className="lg:p-36 md:p-52 sm:20 p-8 w-full lg:w-1/2">
-        <h1 className="text-2xl font-semibold mb-4">Sing Up</h1>
-        <form>
-          {/* <!-- Email Input --> */}
-          <div className="mb-4">
-            <label htmlFor="email" className="block text-gray-600">
-              email
-            </label>
-            <input
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-              type="text"
-              id="email"
-              name="email"
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-              autoComplete="off"
-            />
-            {touched.email && errors.email ? <span>{errors.email}</span> : null}
-          </div>
-          {/* <!-- Password Input --> */}
-          <div className="mb-4">
-            <label htmlFor="password" className="block text-gray-600">
-              Password
-            </label>
-            <input
-              onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              type="password"
-              id="password"
-              name="password"
-              className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
-              autoComplete="off"
-            />
-            {touched.password && errors.password ? (
-              <span>{errors.password}</span>
-            ) : null}
-          </div>
-          {message && (
-            <div
-              className={`mt-4 ${
-                message.includes("error") ? "text-red-500" : "text-green-500"
-              }`}
-            >
-              {message}
-            </div>
-          )}
-          {/* <!-- Login Button --> */}
-          <button
-            type="submit"
-            // onClick={onClickSignUp}
-            onClick={handleSubmit}
-            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full"
-          >
-            Sing Up
-          </button>
-        </form>
+        <h1 className="text-3xl font-extrabold mb-4">Sing Up</h1>
 
-        <div className="mt-6 text-blue-500 text-center">
-          <h1>Have a count? </h1>
-          <a href="/login" className="hover:underline">
+        <FormEmaIlPasswordInput
+          handleBlur={handleBlur}
+          handleChange={handleChange}
+          handleSubmit={handleSubmit}
+          values={values}
+          touched={touched}
+          errors={errors}
+          message={message}
+          btnTitle={"Sing up"}
+        >
+          
+        </FormEmaIlPasswordInput>
+
+        <div className="mt-6  text-center">
+          <h1 className="font-bold text-black">Have a count? </h1>
+          <a href="/login" className="hover:underline text-blue-500">
             Login up Here
           </a>
         </div>
@@ -125,3 +105,4 @@ const SingUp = () => {
 };
 
 export default SingUp;
+

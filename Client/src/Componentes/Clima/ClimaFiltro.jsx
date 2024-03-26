@@ -35,12 +35,7 @@ const ClimaFiltro = () => {
   // mutacion de estado de redux en coordenadas por ende se dispara una nueva petucion en componente <SeccionClimaExtendido/> y en consecuencia se actualiza una nueva zona con el clima extendido (inputciudad es producto de la busqueda hecha en la searchbar )
   const handlerLocalizacion = (index) => {
     setIndexCiudad(index);
-    // dispatch(
-    //   actualizarCoordenadas({
-    //     latitud: inputCiudad && inputCiudad[index].lat,
-    //     longitud: inputCiudad && inputCiudad[index].lon,
-    //   })
-    // );
+ 
     dispatch(
       actualizarDatosZona({
         codigoDeEstado: state.datosZona.codigoDeEstado,
@@ -65,7 +60,6 @@ const ClimaFiltro = () => {
 
   console.log(coodernadasQuery.data);
   useEffect(() => {
-  
     // if (!coodernadasQuery.data) {
     if (
       debouncedInput &&
@@ -117,13 +111,14 @@ const ClimaFiltro = () => {
   ]);
 
   return (
-    <>
+    <div className="flex flex-col md:flex-row justify-center pt-4 mt-20 mb-20 px-4 md:px-0 relative">
+    <div className="">
       <select
         onChange={(e) => handlerDatosCoordenadas(e)}
-        className="select mt-40 select-info w-full max-w-xs my-2"
+        className="select select-info w-1/2 max-w-sm my-2 border mx-2 px-2 md:mr-0 md:w-auto  "
       >
         <option disabled selected>
-          selecciones una provincia
+        Select a province
         </option>
         {provincias &&
           provincias.map((provincia, index) => {
@@ -134,34 +129,36 @@ const ClimaFiltro = () => {
             );
           })}
       </select>
+  
       <input
         onChange={(e) => onchangeInput(e)}
         type="text"
         value={input}
         placeholder="Type here"
-        className="input input-ghost w-full max-w-xs  "
+        className="w-full px-2 max-w-xs my-2 border h-12 rounded-md mx-2 md:mx-2 "
       />
-      {input && (
-        <div className="flex absolute z-40 " style={{ marginLeft: "35%" }}>
-          <div className="px-4 sm:px-8 max-w-5xl m-auto ">
-            <ul className="border border-gray-200 rounded overflow-hidden shadow-md">
-              {inputCiudad &&
-                inputCiudad.map((zona, index) => {
-                  return (
-                    <li
-                      onClick={() => handlerLocalizacion(index)}
-                      key={index}
-                      className="px-4 py-2 bg-white hover:bg-sky-100 hover:text-sky-900 border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out cursor-pointer"
-                    >
-                      {zona.name}
-                    </li>
-                  );
-                })}
-            </ul>
-          </div>
+    </div>
+    {input && (
+      <div className="absolute top-full left-1/2 transform -translate-x-1/2 z-40 md:w-72 max-h-96 overflow-y-auto">
+        <div className="px-4 sm:px-8 max-w-xs md:max-w-none m-auto">
+          <ul className="border border-gray-200 rounded overflow-hidden shadow-md">
+            {inputCiudad &&
+              inputCiudad.map((zona, index) => {
+                return (
+                  <li
+                    onClick={() => handlerLocalizacion(index)}
+                    key={index}
+                    className="px-4 py-2 bg-white hover:bg-sky-100 hover:text-sky-900 border-b last:border-none border-gray-200 transition-all duration-300 ease-in-out cursor-pointer"
+                  >
+                    {zona.name}
+                  </li>
+                );
+              })}
+          </ul>
         </div>
-      )}
-    </>
+      </div>
+    )}
+  </div>
   );
 };
 

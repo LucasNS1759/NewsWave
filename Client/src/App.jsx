@@ -14,12 +14,14 @@ import Footer from "./Componentes/Footer/Footer";
 import axios from "axios";
 import Paises from "./Componentes/Paises/Paises";
 import SeccionClima from "./Componentes/Clima/SeccionClima";
+import ChangePassword from "./Componentes/ChangePassword/ChangePassword";
+import PageNotFound from "./Componentes/404/PageNotFound";
 
 //Instancia de axios para Render.
 // axios.defaults.baseURL = "https://mundo-noticia.onrender.com";
 
 //Instancia de axios para trabajo local:
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "http://localhost:3002";
 
 function App() {
   const location = useLocation();
@@ -34,10 +36,10 @@ function App() {
 
   return (
     <main className="flex flex-col justify-center">
-      {
-        location.pathname !== "/login" &&
-        location.pathname !== "/SingUp" && <Nav />}
+      {/* {location.pathname !== "/login" && location.pathname !== "/SingUp" && (
+        )} */}
 
+        <Nav />
       <Routes>
         <Route path="/" element={<HomeNoticias />} />
         <Route path="/HomeNoticia?" element={<HomeNoticias />} />
@@ -48,6 +50,8 @@ function App() {
         <Route path="/Login" element={<Login />} />
         <Route path="/SingUp" element={<SingUp />} />
         <Route path="/FullNews?" element={<FullNews />} />
+        <Route path="/resetPassword?" element={<ChangePassword />} />
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
     </main>
