@@ -1,14 +1,13 @@
-const {User} = require("../db.js");
+const { User } = require("../db.js");
 
-const unsubscribeController = async (user) =>{
-    const findUser = await User.findByPk(user.userId);
+const unsubscribeController = async (user) => {
+  const findUser = await User.findByPk(user.userId);
+  findUser.subscription = false;
+  await findUser.save();
+  return {
+    title: "You unsubscribed successfully",
+    text: "you can subscribe again at any time",
+  };
+};
 
-    findUser.subscription = false;
-    // findUser.category_subscription = category;
-    await findUser.save();
-    console.log(findUser.subscription)
-    return findUser.subscription;
-}
-
-
-module.exports = unsubscribeController
+module.exports = unsubscribeController;

@@ -1,0 +1,74 @@
+{
+  "component-PageNotFound": {
+    "Page Not Found": "Pagina no encontrada",
+    "Sorry, the page you are looking for could not be found.": "Lo siento, la página que estás buscando no se pudo encontrar.",
+    "Return Home": "Volver al Inicio"
+  },
+
+  "Component-Change-Password": {
+    "schema": {
+      "password": "La contraseña debe tener al menos 8 caracteres de longitud.",
+      "confirmPassword-oneOf": "Las contraseñas no coinciden.",
+      "password-required": "Se requiere la contraseña.",
+      "confirmPassword-required": "Debes confirmar tu contraseña.",
+      "matches": "La contraseña debe contener al menos 1 letra mayúscula y 1 número."
+    },
+    "onclickChangePassword": {
+      "success-swal-fire": {
+        "title": "Has cambiado tu contraseña",
+        "text": "Has actualizado tu contraseña exitosamente"
+      }
+    },
+    "h2-Change-Password": {
+      "Change-Password": "Cambiar contraseña"
+    },
+    "p-Password-and-confirm-validation": {
+      "password": "Validación",
+      "and": "de",
+      "Confirm": "Contraseña",
+      "Validation": "y confirmación"
+    },
+    "button-change-password": "Cambiar contraseña"
+  },
+  "Componente-clima-actual": {
+    "h2-updated-at": "Actualizado a las"
+  },
+  "Componente-clima-extendido-por-hora": {
+    "Extended forecast for": "Pronóstico extendido para",
+    "Humidity": "Humedad"
+  },
+  "Componente-clima-filtro": {
+    "option-disabled": "Seleccione una provincia",
+    "input-placeholder": "Busque aqui..."
+  },
+
+  "Componente-seccion-clima-extendido": {
+    "Humidity": "Humedad",
+    "Wind": "Viento",
+    "Feeling Ends": "Sensación Térmica",
+    "extended forecast": "Pronóstico extendido"
+  },
+  "Componente-footer": {
+    "Get Informed": "Infórmate",
+    "Weather": "Tiempo",
+    "Dollar": "Dólar",
+    "Sections": "Secciones",
+    "My Networks": "Mis Redes"
+  },
+  "Component-NewsSubscription": {
+    "Do you want to receive the latest news in your email?": "¿Quieres recibir las últimas noticias en tu correo?",
+    "Do you want to stop receiving news?": "¿Quieres dejar de recibir noticias?",
+    "Subscribe Here": "Suscríbete aquí",
+    "Click Here": "Haz clic aquí"
+  },
+  "Component-Sidebar": {
+    "Search": "Buscar",
+    "Language": "Idioma",
+    "News": "Noticias",
+    "Weather": "Tiempo",
+    "Dollar": "Dólar",
+    "Sections": "Secciones",
+    "Search News here..." : "Búsca noticias aquí..."
+    
+  }
+}

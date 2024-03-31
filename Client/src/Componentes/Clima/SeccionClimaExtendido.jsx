@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import ClimaActual from "./ClimaActual";
 import { getClima } from "../../helpers/climaFunctions/getApiClima";
 import { useQuery } from "@tanstack/react-query";
@@ -12,6 +13,7 @@ const obtenerMedioDiaHora = (index, useClimaQuery) => {
 };
 
 const SeccionClimaExtendido = () => {
+  const { t } = useTranslation("global");
   const state = useSelector((state) => state.climaSlice);
   const latitud = state?.coordenadas.latitud;
   const longitud = state?.coordenadas.longitud;
@@ -120,10 +122,13 @@ const SeccionClimaExtendido = () => {
         </div>
       )}
 
+      {/* clima extendido  */}
       <div className=" mx-auto">
         <div className="mt-2 bg-gray-800 text-white p-8 rounded-lg">
           <div className="flex justify-between min-w-64 mb-4 w-full">
-            <div className="w-auto font-bold uppercase text-90">Humidity</div>
+            <div className="w-auto font-bold uppercase text-90">
+              {t("Componente-seccion-clima-extendido.Humidity")}
+            </div>
             <div className="w-auto text-right">
               {" "}
               {useClimaQuery.data &&
@@ -133,7 +138,7 @@ const SeccionClimaExtendido = () => {
             </div>
           </div>
           <div className="flex justify-between min-w-64 mb-8 w-full">
-            <div className="w-auto font-bold uppercase text-90">Wind</div>
+            <div className="w-auto font-bold uppercase text-90">{t("Componente-seccion-clima-extendido.Wind")}</div>
             <div className="w-auto text-right">
               {" "}
               {useClimaQuery.data &&
@@ -167,7 +172,7 @@ const SeccionClimaExtendido = () => {
                         <br />
                         <strong className="text-xl">{dia[0].tempMax}</strong>
                         <p className="text-xs text-gray-500">
-                          Feeling Ends <br /> {dia[0].sensacionTermica}
+                        {t("Componente-seccion-clima-extendido.apparent temperature")} <br /> {dia[0].sensacionTermica}
                         </p>
                       </div>
                       <div className="flex justify-center mt-auto border-t-2 border-gray-100 pt-2">
@@ -175,7 +180,7 @@ const SeccionClimaExtendido = () => {
                           onClick={openModal}
                           className="text-indigo-600 text-xs font-medium focus:outline-none"
                         >
-                          Hourly forecast
+                     {t("Componente-seccion-clima-extendido.extended forecast")}
                         </button>
                       </div>
                     </div>

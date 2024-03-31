@@ -21,7 +21,6 @@ const Clima = () => {
   }, []);
 
   useEffect(() => {
-    console.log(ubicacion, location);
     if (location && ubicacion) {
       axios
         .get(

@@ -8,9 +8,7 @@ const { NOTICIAS_KEY, MAILsUB_NODEMAILER, PASS_EMAIL_SUBSCRIBERS } =
   process.env;
 const axios = require("axios");
 
-
 const findSubscriptionHandler = async (req, res) => {
-
   try {
     const response = await findSubscriptionController(req.user.userId);
     res.status(200).json(response);
@@ -45,7 +43,7 @@ const sendNewsSubscribers = async (req, res) => {
   try {
     const usersSubscribers = await usersSubscribersController();
     const lastNews = await axios.get(
-      `https://api.currentsapi.services/v1/latest-news?language=en&page_size=3&apiKey=LP-6uylJws-Cof6XIyS2fyUO5fai0qNxIhCmJitBdwG_00HO`
+      `https://api.currentsapi.services/v1/latest-news?language=en&page_size=3&apiKey=${NOTICIAS_KEY}`
     );
     console.log(lastNews.data.news);
     const transporter = nodemailer.createTransport({
@@ -65,159 +63,48 @@ const sendNewsSubscribers = async (req, res) => {
         subject: "Rotativo de ultima hora ",
         text: "NewsWave Siempre Informando con la verdad",
         html: ` 
-        <body
-         justify-content: center ;align-items: center; text-align: center;  height: 100vh;">
-        <h1 style="color: rgb(0, 0, 0);font-weight: 900; font-family:cursive;filter:drop-shadow(0 0 25px rgb(5, 5, 5)) ;">
-                Hola ${"usuario"},</h1>
-            <h2 style=" width: 600px;  font-family: cursive; font-weight: 600;">A continuación, te presentamos las últimas
-                <br> noticias del día:
-            </h2>
-            
-        <article >
+        <body style="font-family: Arial, sans-serif; text-align: center; background-color: #f7f7f7; padding: 20px;">
+
+        <h1 style="color: #333; font-weight: bold;">Hola <span style="color: #0066ff;">usuario</span>,</h1>
+        
+        <p style="color: #333; font-size: 18px;">A continuación, te presentamos las últimas noticias del día:</p>
+        
+        <div style="max-width: 600px; margin: 0 auto; background-color: #fff; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); overflow: hidden;">
+            <article style="padding: 20px;">
+                <h2 style="color: #333; font-size: 24px; font-weight: bold; margin-bottom: 10px;">${lastNews.data.news[0].title}</h2>
+                <img src="${lastNews.data.news[0].image}" alt="${lastNews.data.news[0].title}" style="max-width: 100%; border-radius: 5px; margin-bottom: 10px;">
+                <p style="color: #666; font-size: 16px;">${lastNews.data.news[0].description}</p>
+                <a href="${lastNews.data.news[0].url}" style="color: #0066ff; text-decoration: none;">Leer más</a>
+            </article>
+        
             <hr>
-           
-            <h3 style="   color: rgb(7, 7, 7);
-            font-size: 2rem;
-            filter: drop-shadow(0 0 10px black)">${
-              lastNews.data.news[0].title
-            }</h3>
-            <img style="border-radius: 2rem; width: 200px; filter: drop-shadow(0 0 10px black)"
-                src=${lastNews.data.news[0].image}
-                alt="">
-            <p style="  color: rgb(8, 8, 8);
-            font-weight: 900;
-            font-size: 18px;
-            font-family: cursive;
-            margin: auto auto;
-           padding: 1rem;
-            text-shadow: black;
-            text-align: center;
-            width: 600px;
-            filter: drop-shadow(0 0 25px rgb(0, 0, 0))">
-            
-            ${lastNews.data.news[0].description}
-                </p>
-            <a style="color: blue;  font-size: 18px; " onmouseover="this.style.color='red'"
-                onmouseout="this.style.color='blue'" href=${
-                  lastNews.data.news[0].url
-                }>full News</a>
-            <br>
+        
+            <article style="padding: 20px;">
+                <h2 style="color: #333; font-size: 24px; font-weight: bold; margin-bottom: 10px;">${lastNews.data.news[1].title}</h2>
+                <img src="${lastNews.data.news[1].image}" alt="${lastNews.data.news[1].title}" style="max-width: 100%; border-radius: 5px; margin-bottom: 10px;">
+                <p style="color: #666; font-size: 16px;">${lastNews.data.news[1].description}</p>
+                <a href="${lastNews.data.news[1].url}" style="color: #0066ff; text-decoration: none;">Leer más</a>
+            </article>
+        
             <hr>
-        </article>
         
-        <article >
-       
-       
-        <h3 style="   color: rgb(7, 7, 7);
-        font-size: 2rem;
-        filter: drop-shadow(0 0 10px black)">${lastNews.data.news[1].title}</h3>
-        <img style="border-radius: 2rem; width: 200px; filter: drop-shadow(0 0 10px black)"
-            src=${lastNews.data.news[1].image}
-            alt="">
-        <p style="  color: rgb(8, 8, 8);
-        font-weight: 900;
-        font-size: 18px;
-        font-family: cursive;
-        margin: auto auto;
-       padding: 1rem;
-        text-shadow: black;
-        text-align: center;
-        width: 600px;
-        filter: drop-shadow(0 0 25px rgb(0, 0, 0))">
+            <article style="padding: 20px;">
+                <h2 style="color: #333; font-size: 24px; font-weight: bold; margin-bottom: 10px;">${lastNews.data.news[2].title}</h2>
+                <img src="${lastNews.data.news[2].image}" alt="${lastNews.data.news[2].title}" style="max-width: 100%; border-radius: 5px; margin-bottom: 10px;">
+                <p style="color: #666; font-size: 16px;">${lastNews.data.news[2].description}</p>
+                <a href="${lastNews.data.news[2].url}" style="color: #0066ff; text-decoration: none;">Leer más</a>
+            </article>
+        </div>
         
-        ${lastNews.data.news[1].description}
-            </p>
-        <a style="color: blue;  font-size: 18px; " onmouseover="this.style.color='red'"
-            onmouseout="this.style.color='blue'" href=${
-              lastNews.data.news[1].url
-            }>full News</a>
-        <br>
-        <hr>
-    </article>
-    
-    <article >
-    
-   
-    <h3 style="   color: rgb(7, 7, 7);
-    font-size: 2rem;
-    filter: drop-shadow(0 0 10px black)">${lastNews.data.news[2].title}</h3>
-    <img style="border-radius: 2rem; width: 200px; filter: drop-shadow(0 0 10px black)"
-        src=${lastNews.data.news[2].image}
-        alt="">
-    <p style="  color: rgb(8, 8, 8);
-    font-weight: 900;
-    font-size: 18px;
-    font-family: cursive;
-    margin: auto auto;
-   padding: 1rem;
-    text-shadow: black;
-    text-align: center;
-    width: 600px;
-    filter: drop-shadow(0 0 25px rgb(0, 0, 0))">
-    
-    ${lastNews.data.news[2].description}
-        </p>
-    <a style="color: blue;  font-size: 18px; " onmouseover="this.style.color='red'"
-        onmouseout="this.style.color='blue'" href=${
-          lastNews.data.news[2].url
-        }>full News</a>
-    <br>
-    <hr>
-</article>
+        <p style="color: #333; font-size: 16px; margin-top: 20px;">Puedes encontrar más noticias <a href="http://localhost:5174/FullNews?categoria=last%20News" style="color: #0066ff; text-decoration: none;">aquí</a>.</p>
         
-            <p style="  color: rgb(8, 8, 8);
-            font-weight: 900;
-            font-size: 15px;
-            font-family: cursive;
-            margin: auto auto;
-          
-            text-shadow: black;
-            text-align: center;
-            width: 200px;
-            filter: drop-shadow(0 0 25px rgb(0, 0, 0))">Puedes encontrar mas noticias <a
-                    href="http://localhost:5174/FullNews?categoria=last%20News">aquí</a>.</p>
-            <p style="  color: rgb(8, 8, 8);
-            font-weight: 900;
-            font-size: 15px;
-            font-family: cursive;
-            margin: auto auto;
-           padding: 1rem;
-            text-shadow: black;
-            text-align: center;
-            width: 200px;
-            filter: drop-shadow(0 0 25px rgb(0, 0, 0))">¡Gracias por suscribirte a nuestro servicio de noticias!</p>
-    
-            <p style="  color: rgb(8, 8, 8);
-            font-weight: 700;
-            font-size: 15px;
-            font-family: cursive;
-            margin: auto auto;
-           padding: 1rem;
-            text-shadow: black;
-            text-align: center;
-            width: 200px;
-            filter: drop-shadow(0 0 25px rgb(0, 0, 0))"><span style="font-size: 18px; font-weight: bolder;">NewsWave</span>
-                <br> Siempre informando con la verdad
-            </p>
-            <br />
-            <span style="  color: rgb(8, 8, 8);
-            font-weight: 900;
-            font-size: 15px;
-            font-family: cursive;
-            margin: auto auto;
-         
-            text-shadow: black;
-            text-align: center;
-         
-            filter: drop-shadow(0 0 25px rgb(0, 0, 0))">Quieres dejar de recibir estos mensajes?</span> <br>
-            <a style="margin: 1rem 1rem;" href="https://nodemailer.com/message/custom-source/">click aca</a>
+        <p style="color: #333; font-size: 16px;">¡Gracias por suscribirte a nuestro servicio de noticias!</p>
         
-    
-    </body>
+        <p style="color: #333; font-size: 16px; font-weight: bold; margin-top: 20px;">NewsWave - Siempre informando con la verdad</p>
         
-      
-            
-            
+        <p style="color: #666; font-size: 16px; margin-top: 20px;">¿Quieres dejar de recibir estos mensajes? <a href="http://localhost:5174?unsubscribe=true" style="color: #0066ff; text-decoration: none;">Haz clic aquí</a>.</p>
+        
+        </body>
             `,
       };
 

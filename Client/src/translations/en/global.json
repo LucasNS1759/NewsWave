@@ -1,0 +1,71 @@
+{
+  "component-PageNotFound": {
+    "Page Not Found": "Page not found",
+    "Sorry, the page you are looking for could not be found.": "Sorry, the page you are looking for could not be found.",
+    "Return Home": "Return Home"
+  },
+  "Component-Change-Password": {
+    "schema": {
+      "password": "The password must be at least 8 characters long.",
+      "confirmPassword-oneOf": "The passwords do not match.",
+      "password-required": "The password is required.",
+      "confirmPassword-required": "You must confirm your password.",
+      "matches": "The password must contain at least 1 uppercase letter and 1 number."
+    },
+    "onclickChangePassword": {
+      "success-swal-fire": {
+        "title": "You have changed your password",
+        "text": "You have successfully updated your password"
+      }
+    },
+    "h2-Change-Password": {
+      "Change-Password": "Change Password"
+    },
+    "p-Password-and-confirm-validation": {
+      "password": "Password",
+      "and": "and",
+      "Confirm": "Confirm",
+      "Validation": "Validation"
+    },
+    "button-change-password": "Change Password"
+  },
+  "Componente-clima-actual": {
+    "h2-updated-at": "Update at"
+  },
+  "Componente-clima-extendido-por-hora": {
+    "Extended forecast for": "Extended forecast for",
+    "Humidity": "Humidity"
+  },
+  "Componente-clima-filtro": {
+    "option-disabled": "Select a province",
+    "input-placeholder": "Search here..."
+  },
+  "Componente-seccion-clima-extendido": {
+    "Humidity": "Humidity",
+    "Wind": "Wind",
+    "apparent temperature": "apparent temperature",
+    "extended forecast": "extended forecast"
+  },
+  "Componente-footer": {
+    "Get Informed": "Get Informed",
+    "Weather": "Weather",
+    "Dollar": "Dollar",
+    "Sections": "Sections",
+    "My Networks": "My Networks"
+  },
+  "Component-NewsSubscription": {
+    "Do you want to receive the latest news in your email?": "Do you want to receive the latest news in your email?",
+    "Do you want to stop receiving news?": "Do you want to stop receiving?",
+    "Subscribe Here": "Subscribe here",
+    "Click Here": "Click here"
+  },
+  "Component-Sidebar": {
+   "Search": "Search",
+   "Language": "Language",
+   "News" : "News",
+   "Weather" : "Weather",
+   "Dollar": "Dollar",
+   "Sections" : "Sections",
+   "Search News here..." : "Search News here..."
+  }
+}

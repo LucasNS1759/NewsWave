@@ -10,8 +10,8 @@ const authMiddleware = {
     const token = req.cookies.Token;
 
     if (!token) {
-    console.log("no hay tpken")
-      return res.status(401).json({ error: "Debe iniciar sesión primero" });
+   
+      return res.status(401).json({ error: "You must log in first" });
     }
 
     try {
@@ -19,13 +19,14 @@ const authMiddleware = {
       req.user = decodedToken;
       next();
     } catch (error) {
-      return res.status(400).json({ error: "Token inválido" });
+    console.log(error)
+      return res.status(400).json({ error: "session expired, login  and try again" });
     }
   },
 
   // Middleware para verificar el token de restablecimiento de contraseña
   verifyResetPasswordToken: async (req, res, next) => {
-    const resetPasswordToken = req.cookies.resetPasswordToken;
+
     const { resetToken } = req.query;
 
     try {
@@ -81,21 +82,21 @@ const authMiddleware = {
     const { resetToken } = req.query;
 
     if (!resetToken) {
-      return res.status(400).json({ error: "Token inválido" });
+      return res.status(400).json({ error: "invalid token" });
     }
 
     try {
       const decodedToken = jwt.verify(resetToken, SECRET_KEY);
       if (!decodedToken) {
-        return res.status(402).json({ error: "Token expirado" });
+        return res.status(402).json({ error: "expired token" });
       } else {
         next();
       }
     } catch (error) {
       if (error.name === "TokenExpiredError") {
-        return res.status(401).json({ error: "Token expirado" });
+        return res.status(401).json({ error: "expired token" });
       }
-      return res.status(400).json({ error: "Token inválido" });
+      return res.status(400).json({ error: "invalid token" });
     }
   },
 };

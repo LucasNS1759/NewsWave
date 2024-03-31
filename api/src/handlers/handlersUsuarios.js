@@ -59,11 +59,11 @@ const handlerSendEmail = async (req, res) => {
       },
     });
     const mailOptions = {
-      from: "mundonoticiasresetpass@gmail.com",
+      from: "newswaveresetpass@gmail.com",
       to: email,
-      subject: "Resetear contraseña!",
-      text: "haga click en el enlace para poder resetear su contrasña",
-      html: `<p>Haga clic en el siguiente enlace para restablecer su contraseña:</p><a href="${resetLink}">${resetLink}</a>`,
+      subject: "Reset Password",
+      text: "Click on the link to reset your password.",
+      html: `<p>Click on the following link to reset your password:</p><a href="${resetLink}">${resetLink}</a>`,
     };
 
     // send email

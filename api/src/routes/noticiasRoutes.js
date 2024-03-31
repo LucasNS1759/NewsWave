@@ -4,7 +4,7 @@ const {handlerNoticias, handlerUltimasNoticias,handlerFullNews} = require("../ha
 const noticiasRoutes = Router()
 
 noticiasRoutes.get("/?", handlerNoticias)
-noticiasRoutes.get("/ultimasNoticias", handlerUltimasNoticias)
+noticiasRoutes.get("/ultimasNoticias?", handlerUltimasNoticias)
 noticiasRoutes.get("/fullNews?", handlerFullNews)
 
 

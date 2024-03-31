@@ -3,7 +3,6 @@ const { NOTICIAS_KEY } = process.env;
 const axios = require("axios");
 //POR PROBLEMAS DE LA API QUE YA NO ME TRAE NOTICIAS EN ESPAÑOL TUVE Q HARDCODEAR PARA Q SOLO ME BUSQUE NOTICIAS EN INGLES
 
-
 const timeout = (ms, keyWords, category, language) => {
   return new Promise((_, reject) => {
     setTimeout(() => {
@@ -16,7 +15,7 @@ const timeout = (ms, keyWords, category, language) => {
         });
       } else if (category) {
         reject({
-          message: `Tiempo de espera agotado para la búsqueda en ${language} para la categoría ${category}`,
+          message: `Tiempo de espera agotado para la búsqueda en idioma ${language} para la categoría ${category}`,
           status: 504,
           categoria: category,
           idioma: language,
@@ -44,7 +43,7 @@ const handlerNoticias = async (req, res) => {
   const apiBaseUrl = `https://api.currentsapi.services/v1/latest-news`;
 
   const getCategoryApi = (category) => {
-    return `${apiBaseUrl}?keywords=${keyWords}&category=${category}&language=${"en"}&page_size=${pageSize}&apiKey=${NOTICIAS_KEY}`;
+    return `${apiBaseUrl}?keywords=${keyWords}&category=${category}&language=${"es"}&page_size=${pageSize}&apiKey=${NOTICIAS_KEY}`;
   };
 
   const categoryResponses = {};
@@ -88,7 +87,7 @@ const handlerNoticias = async (req, res) => {
         categoryResponses[failedCategory] = fallbackResponse.data.news;
         res.status(200).json(categoryResponses);
       } catch (fallbackError) {
-        // console.error(fallbackError);
+        console.log(fallbackError);
         res.status(504).json({ error: fallbackError.message });
       }
     }
@@ -96,9 +95,10 @@ const handlerNoticias = async (req, res) => {
 };
 
 const handlerUltimasNoticias = async (req, res) => {
+  const { language = "en" } = req.query;
   try {
     const response = await axios.get(
-      `https://api.currentsapi.services/v1/latest-news?language=en&page_size=5&apiKey=${NOTICIAS_KEY}`
+      `https://api.currentsapi.services/v1/latest-news?language=${language}&page_size=5&apiKey=${NOTICIAS_KEY}`
     );
     res.status(200).json(response.data.news);
   } catch (error) {
@@ -107,26 +107,30 @@ const handlerUltimasNoticias = async (req, res) => {
 };
 
 const handlerFullNews = async (req, res) => {
-  const { category, language = "en", keyWords } = req.query;
-console.log(category,keyWords)
+  const { category, language, keyWords } = req.query;
+  console.log(category, keyWords);
   try {
     const response = keyWords
       ? await Promise.race([
           axios.get(
-            `https://api.currentsapi.services/v1/search?keywords=${keyWords}&apiKey=${NOTICIAS_KEY}`
+            `https://api.currentsapi.services/v1/search?keywords=${keyWords}&language=${language}&apiKey=${NOTICIAS_KEY}`
           ),
-          timeout(10000, keyWords, "", language),
+          timeout(8000, keyWords, "", language),
         ])
       : await Promise.race([
           axios.get(
-            `https://api.currentsapi.services/v1/latest-news?language=${"en"}&category=${category}&page_size=50&apiKey=${NOTICIAS_KEY}`
+            `https://api.currentsapi.services/v1/latest-news?language=${language}&category=${category}&page_size=50&apiKey=${NOTICIAS_KEY}`
           ),
-          timeout(6000, "", category, ""),
+          timeout(6000, "", category, language),
         ]);
+    console.log(response.data);
+    if (!response.data.news.length) {
+      throw new Error("invalid news");
+    }
     res.status(200).json(response.data);
   } catch (error) {
-    res.status(501).json(error);
-    // console.log(error);
+    console.log(error);
+    res.status(501).json(error.message);
   }
 };
 

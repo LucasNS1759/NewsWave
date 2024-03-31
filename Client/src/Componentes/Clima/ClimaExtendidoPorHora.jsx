@@ -1,6 +1,9 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 
 const ClimaExtendido = ({ pronostico, zona, indexClimaData }) => {
+  const { t } = useTranslation("global");
+
   return (
     <div className="flex flex-col h-full w-full">
       <div className="overflow-x-auto overflow-y-auto sm:mx-0.5 lg:mx-0.5">
@@ -21,7 +24,7 @@ const ClimaExtendido = ({ pronostico, zona, indexClimaData }) => {
                     scope="col"
                     className="text-sm font-medium text-gray-900 px-6 py-4 text-left"
                   >
-                    Extended forecast for {zona ? zona : "Buenos Aires"}
+                    {t("Componente-clima-extendido-por-hora.Extended forecast for")} {zona ? zona : "Buenos Aires"}
                   </th>
                   <th
                     scope="col"
@@ -44,7 +47,7 @@ const ClimaExtendido = ({ pronostico, zona, indexClimaData }) => {
                           {clima.temperatura}
                         </td>
                         <td className="text-sm text-gray-900 font-semibold px-6 py-4 whitespace-nowrap">
-                        Humidity {clima.humedad}
+                        {t("Componente-clima-extendido-por-hora.Humidity")} {clima.humedad}
                         </td>
                         <td className="text-sm text-gray-900 font-semibold px-6 py-4 whitespace-nowrap">
                           {clima.estado}

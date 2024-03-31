@@ -7,9 +7,12 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux/userSlice";
 import Loading from "../Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
-import SubNavBar from "../NavBar/SubNavBar"
+import SubNavBar from "../NavBar/SubNavBar";
+import { unsubscribeHandler } from "../../helpers/functionUnsubscribe/unsubscribe";
+import { useNavigate } from "react-router-dom";
 
 const HomeNoticias = () => {
+  const navigate = useNavigate();
   const [noticias] = useState([]);
   const [ultimasNoticias, setUltimasNoticias] = useState("");
   const [loading, setLoading] = useState(true);
@@ -18,6 +21,15 @@ const HomeNoticias = () => {
 
   const login = new URLSearchParams(location.search).get("login");
   const userId = new URLSearchParams(location.search).get("userId");
+  const unsubscribe = new URLSearchParams(location.search).get("unsubscribe");
+
+  useEffect(() => {
+    if (unsubscribe) {
+      unsubscribeHandler();
+      // Limpiar los parámetros de búsqueda del URL
+      navigate(location.pathname);
+    }
+  }, [unsubscribe, navigate]);
 
   useEffect(() => {
     if (login) {
@@ -34,10 +46,11 @@ const HomeNoticias = () => {
   };
 
   const getUltimasNoticias = async () => {
+    const languageToggle = window.localStorage.getItem("languages");
     try {
       // if (!ultimasNoticias.length) {
       const response = await axios.get(
-        "/noticias/ultimasNoticias"
+        `/noticias/ultimasNoticias?language=${languageToggle}`
       );
       if (
         response.status === 504 ||
@@ -64,8 +77,6 @@ const HomeNoticias = () => {
     }
   };
 
-
-
   useEffect(() => {
     if (!noticias.length) {
       getUltimasNoticias();
@@ -76,13 +87,10 @@ const HomeNoticias = () => {
     queryKey: ["getNoticias"],
     queryFn: getNoticias,
     staleTime: 1000,
-    
   });
   if (useNoticiasQuerys.isError) {
     return useNoticiasQuerys.refetch;
   }
-
-  console.log(useNoticiasQuerys.data);
 
   return (
     // <!-- component -->
@@ -110,7 +118,6 @@ const HomeNoticias = () => {
               />
               <span className="text-green-800 font-bold text-sm hidden md:block mt-4">
                 {" "}
-               
               </span>
               <h1 className="text-gray-800 text-4xl font-black mt-2 mb-2 leading-tight">
                 {ultimasNoticias ? ultimasNoticias[0]?.title : " "}.
@@ -124,7 +131,7 @@ const HomeNoticias = () => {
                 rel={"noreferrer"}
                 className="inline-block px-6 py-3 mt-2 rounded-md underline text-blue-500"
               >
-               Full News
+                Full News
               </a>
             </div>
 
@@ -134,7 +141,7 @@ const HomeNoticias = () => {
                 ultimasNoticias
                   .slice(1, ultimasNoticias.length)
                   .map((noticia) => {
-                    return <SubNoticias key={noticia.id} category={noticia} />;
+                    return <SubNoticias key={noticia?.id} category={noticia} />;
                   })}
             </div>
           </div>
@@ -165,9 +172,6 @@ const HomeNoticias = () => {
               </div>
             </div>
           </div> */}
-          
-          
-       
 
           {!useNoticiasQuerys.isError &&
             useNoticiasQuerys.data &&
@@ -189,4 +193,4 @@ const HomeNoticias = () => {
   );
 };
 
- export default HomeNoticias;
+export default HomeNoticias;

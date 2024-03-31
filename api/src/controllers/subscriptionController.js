@@ -6,8 +6,11 @@ const addNewsSubscriptionsController = async (user) => {
   findUser.subscription = true;
   // findUser.category_subscription = category;
   await findUser.save();
-  
-  return findUser;
+
+  return {
+    title: "you have successfully subscribed to the news service",
+    text: "Now you will receive the latest, most up-to-date news in your email",
+  };
 };
 
 module.exports = addNewsSubscriptionsController;

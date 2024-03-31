@@ -10,11 +10,11 @@ const controllerPostUsuario = async (email, password) => {
 
     if (findUser) {
     console.log(findUser)
-      throw new Error(`El email ${email} ya está en uso`);
+      throw new Error(`this email ${email} is already in use`);
     } else {
       await User.create({ email, password });
       return {
-        response: "Usuario registrado con éxito",
+        response: "Registered user successfully",
       };
     }
   } catch (error) {

@@ -54,10 +54,36 @@ server.use(
 server.use(passport.initialize());
 server.use(passport.session());
 // Cron job para ejecutar sendNewsEmails cada día a las 8 a.m.
-cron.schedule("16 18 * * *", () => {
+cron.schedule("08 18 * * *", () => {
   console.log("Consultando nuevas noticias y enviando correos electrónicos...");
   sendNewsSubscribers();
 });
+
+const task = () => {
+  console.log("Consultando nuevas noticias y enviando correos electrónicos...");
+  sendNewsSubscribers();
+};
+
+// Define la hora de inicio para la primera tarea cron
+let hour = 0;
+let minute = 16;
+
+// Crea 24 tareas cron, una para cada hora en punto
+for (let i = 0; i < 24; i++) {
+  // Crea la expresión cron para ejecutar la tarea en cada hora en punto
+  const cronExpression = `${minute} ${hour} * * *`;
+
+  // Programa la tarea cron
+  cron.schedule(cronExpression, task);
+
+  // Incrementa la hora para la siguiente tarea cron
+  hour++;
+
+  // Reinicia la hora a 0 si alcanza 24 para representar un nuevo día
+  if (hour === 24) {
+    hour = 0;
+  }
+}
 server.use("/", routes);
 
 // Error catching endware.

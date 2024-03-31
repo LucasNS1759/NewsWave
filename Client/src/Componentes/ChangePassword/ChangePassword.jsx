@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
@@ -5,29 +6,33 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import swal from "sweetalert2";
 
-const schema = yup.object().shape({
-  password: yup
-    .string()
-    .min(8, "The password must be at least 8 characters long")
-    .matches(
-      /^(?=.*[A-Z])(?=.*[0-9])/,
-      "The password must contain at least 1 uppercase letter and 1 number."
-    )
-    .required("The password is required."),
-  confirmPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "The passwords do not match.")
-    .required(
-      "You must confirm your password."),
-});
-
 const ChangePassword = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const userId = new URLSearchParams(location.search).get("userId");
-  const resetPasswordToken = new URLSearchParams(location.search).get(
-    "resetToken"
-  );
+  const resetPasswordToken = new URLSearchParams(location.search).get("resetToken");
+  const { t } = useTranslation("global");
+  
+  const schema = yup.object().shape({
+    password: yup
+      .string()
+      .min(8, `${t("Component-Change-Password.schema.password")}`)
+      .matches(
+        /^(?=.*[A-Z])(?=.*[0-9])/,
+        `${t("Component-Change-Password.schema.matches")}`
+      )
+      .required(`${t("Component-Change-Password.schema.password-required")}`),
+    confirmPassword: yup
+      .string()
+      .oneOf(
+        [yup.ref("password"), null],
+        `${t("Component-Change-Password.schema.confirmPassword-oneOf")}`
+      )
+      .required(
+        `${t("Component-Change-Password.schema.confirmPassword-required")}`
+      ),
+  });
+
   const { handleBlur, handleChange, handleSubmit, errors, touched, values } =
     useFormik({
       initialValues: {
@@ -40,44 +45,12 @@ const ChangePassword = () => {
       validationSchema: schema,
     });
 
-  //   const checkResetToken = async () => {
-  //     console.log(resetPasswordToken);
-  //     try {
-  //       if (userId && resetPasswordToken) {
-  //         const response = await axios.get(
-  //           `/usuario/resetPassword?resetTokenActive=${resetPasswordToken}`
-  //         );
-
-  // console.log(response)
-
-  //       }
-  //     } catch (error) {
-  //       if (error.response && error.response.status === 401) {
-  //         swal
-  //           .fire({
-  //             title: "Permiso denegado",
-  //             text: error.response.data.message,
-  //             icon: "warning",
-  //             button: "entiendo",
-  //           })
-  //           .then(() => {
-  //             navigate("/login");
-  //           });
-  //       }
-  //       console.log(error);
-  //     }
-  //   };
-
   useEffect(() => {
     if (!userId && !resetPasswordToken) {
       navigate("/login");
       return;
     }
   }, [navigate, resetPasswordToken, userId]);
-
-  // useEffect(() => {
-  //   checkResetToken();
-  // }, []);
 
   const onclickChangePassword = async () => {
     try {
@@ -92,8 +65,12 @@ const ChangePassword = () => {
       if (response.data) {
         swal
           .fire({
-            title: "Cambio de contraseña ",
-            text: "actualizo su contraseña con exito",
+            title: `${t(
+              "Component-Change-Password.onclickChangePassword.success-swal-fire.title"
+            )}`,
+            text: `${t(
+              "Component-Change-Password.onclickChangePassword.success-swal-fire.text"
+            )}`,
             icon: "success",
             button: "aceptar",
           })
@@ -107,21 +84,33 @@ const ChangePassword = () => {
         title: error.response.statusText,
         text: error.response.data.error,
         icon: "warning",
-        button: "aceptar",
+        button: "ok",
       });
       navigate("/login");
     }
   };
 
   return (
-    <section className="grid h-screen place-content-center  ">
-      <div className="mb-10 text-center ">
-        <h1 className="text-3xl font-bold tracking-widest">
-        Change Password
-        </h1>
+    <section className="bg-gray-100 flex flex-col justify-center items-center h-screen w-full">
+      <div className="text-center ">
+        <h2 className="text-3xl font-bold tracking-widest">
+          {t("Component-Change-Password.h2-Change-Password.Change-Password")}
+        </h2>
         <p>
-          <span className="font-bold">Password</span> and{" "}
-          <span className="font-bold">Confirm</span> validation.
+          <span className="font-bold">
+            {t(
+              "Component-Change-Password.p-Password-and-confirm-validation.password"
+            )}
+          </span>{" "}
+          {t("Component-Change-Password.p-Password-and-confirm-validation.and")}{" "}
+          <span className="font-bold">
+            {t(
+              "Component-Change-Password.p-Password-and-confirm-validation.Confirm"
+            )}
+          </span>{" "}
+          {t(
+            "Component-Change-Password.p-Password-and-confirm-validation.Validation"
+          )}
         </p>
       </div>
       <form className="flex flex-col items-center justify-center space-y-6">
@@ -133,7 +122,7 @@ const ChangePassword = () => {
           onChange={handleChange}
           value={values.password}
           onBlur={handleBlur}
-          className="w-80 appearance-none rounded-full border-0  p-2 px-4  focus:ring-2 focus:ring-orange-500"
+          className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
         />
         <p
           id="validation"
@@ -153,7 +142,7 @@ const ChangePassword = () => {
           onChange={handleChange}
           value={values.confirmPassword}
           onBlur={handleBlur}
-          className="w-80 appearance-none rounded-full border-0  p-2 px-4  focus:ring-2 focus:ring-orange-500"
+          className="w-full border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:border-blue-500"
         />
         <p
           id="validation"
@@ -167,9 +156,9 @@ const ChangePassword = () => {
         <button
           type="submit"
           onClick={handleSubmit}
-          className="rounded-full bg-indigo-500 p-2 px-4 text-white hover:bg-orange-500"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-semibold rounded-md py-2 px-4 w-full"
         >
-          Change Password
+          {t("Component-Change-Password.button-change-password")}
         </button>
       </form>
     </section>

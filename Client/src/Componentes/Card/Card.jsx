@@ -34,16 +34,3 @@ const Card = (props) => {
 };
 
 export default Card;
-// key,
-//   id,
-//   nombreComun,
-//   nombreOficial,
-//   bandera,
-//   continente,
-//   capital,
-//   region,
-//   subRegion,
-//   googleMaps,
-//   area,
-//   poblacion,
-//   soberano,

@@ -1,9 +1,12 @@
+import { useTranslation } from "react-i18next";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { obtenerDiaYFechaActual } from "../../helpers/obtenerFechaActual";
 import { useSelector } from "react-redux";
 
 const ClimaActual = () => {
+  const { t } = useTranslation("global");
+
   const state = useSelector((state) => state.climaSlice);
   const [climaDeHoy, setClimaDeHoy] = useState("");
 
@@ -98,7 +101,8 @@ const ClimaActual = () => {
             </div>
           </div>
           <h2 className="mt-8 text-base font-medium">
-            Updated at {new Date().getHours()}:{new Date().getMinutes()}{" "}
+            {t("Componente-clima-actual.h2-updated-at")} {new Date().getHours()}:
+            {new Date().getMinutes()}{" "}
           </h2>
         </div>
       </div>

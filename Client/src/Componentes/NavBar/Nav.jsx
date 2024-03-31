@@ -105,7 +105,7 @@ const Nav = () => {
               {!login && (
                 <a
                   href="/SingUp"
-                  className="text-text-gray-600  py-2 hover:cursor-pointer px-4 rounded text-white bg-gradient-to-tr from-indigo-600 to-green-600 hover:shadow-lg"
+                  className="text-text-gray-600  py-2 hover:cursor-pointer hover:text-indigo-600"
                 >
                   SIGNUP
                 </a>

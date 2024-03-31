@@ -1,7 +1,5 @@
 import "./App.css";
-import { Routes, Route, useLocation } from "react-router-dom";
-import Detail from "./Componentes/Detail/Detail";
-import FormActivities from "./Componentes/FormActivities/FormActivities";
+import { Routes, Route } from "react-router-dom";
 import Nav from "./Componentes/NavBar/Nav";
 import Login from "./Componentes/Login/Login";
 import SingUp from "./Componentes/Login/SingUp";
@@ -12,7 +10,6 @@ import HomeNoticias from "./Componentes/HomeNoticias/HomeNoticias";
 import FullNews from "./Componentes/HomeNoticias/FullNews";
 import Footer from "./Componentes/Footer/Footer";
 import axios from "axios";
-import Paises from "./Componentes/Paises/Paises";
 import SeccionClima from "./Componentes/Clima/SeccionClima";
 import ChangePassword from "./Componentes/ChangePassword/ChangePassword";
 import PageNotFound from "./Componentes/404/PageNotFound";
@@ -24,7 +21,6 @@ import PageNotFound from "./Componentes/404/PageNotFound";
 axios.defaults.baseURL = "http://localhost:3002";
 
 function App() {
-  const location = useLocation();
   const dispatch = useDispatch();
   const login = window.localStorage.getItem("login");
   useEffect(() => {
@@ -36,17 +32,10 @@ function App() {
 
   return (
     <main className="flex flex-col justify-center">
-      {/* {location.pathname !== "/login" && location.pathname !== "/SingUp" && (
-        )} */}
-
-        <Nav />
+      <Nav />
       <Routes>
         <Route path="/" element={<HomeNoticias />} />
-        <Route path="/HomeNoticia?" element={<HomeNoticias />} />
-        <Route path="/paises" element={<Paises />} />
         <Route path="/clima" element={<SeccionClima />} />
-        <Route path="/Detalle/:id" element={<Detail />} />
-        <Route path="/addNewActivity" element={<FormActivities />} />
         <Route path="/Login" element={<Login />} />
         <Route path="/SingUp" element={<SingUp />} />
         <Route path="/FullNews?" element={<FullNews />} />

@@ -66,6 +66,13 @@ const ForgotPassword = () => {
 
     
     } catch (error) {
+    
+      Swal.fire({
+        title: "oops there was an error",
+        text: error.response.data.error,
+        showConfirmButton: true,
+       
+      });
       console.log(error);
     }
   };

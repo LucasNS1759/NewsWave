@@ -1,6 +1,9 @@
 import { useLocation } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const PageNotFound = () => {
+  const { t } = useTranslation("global");
+
   const location = useLocation();
   // querys que puede recibir el componente segun el error indicarian el status y motivo de error a modo que usuario tenga un poco mas de informacion del error que se le muestra
   const status = new URLSearchParams(location.search).get("status");
@@ -13,12 +16,14 @@ const PageNotFound = () => {
           {status ? status : 404}
         </p>
         <p className="text-2xl md:text-3xl lg:text-5xl font-bold tracking-wider text-gray-500 mt-4">
-          Page Not Found
+          {t("component-PageNotFound.Page Not Found")}
         </p>
         <p className="text-gray-500 mt-4 pb-4 border-b-2 text-center">
           {error
             ? error
-            : "Sorry, the page you are looking for could not be found."}
+            : `${t(
+                "component-PageNotFound.Sorry, the page you are looking for could not be found."
+              )}`}
         </p>
         <a
           href="#"
@@ -37,7 +42,7 @@ const PageNotFound = () => {
               clipRule="evenodd"
             ></path>
           </svg>
-          <a href="/">Return Home</a>
+          <a href="/"> {t("component-PageNotFound.Return Home")}</a>
         </a>
       </div>
     </div>

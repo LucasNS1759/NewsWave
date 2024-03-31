@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 import { provincias } from "../../helpers/provincias";
 import { useDispatch, useSelector } from "react-redux";
@@ -5,6 +6,7 @@ import { actualizarDatosZona, actualizarCoordenadas } from "../../redux/clima";
 import { useGetCoordenadas } from "../Hooks/useGetCoordenadas";
 
 const ClimaFiltro = () => {
+  const { t } = useTranslation("global");
   const dispatch = useDispatch();
   const state = useSelector((state) => state.climaSlice);
   const [input, setInput] = useState("");
@@ -118,7 +120,7 @@ const ClimaFiltro = () => {
         className="select select-info w-1/2 max-w-sm my-2 border mx-2 px-2 md:mr-0 md:w-auto  "
       >
         <option disabled selected>
-        Select a province
+        {t("Componente-clima-filtro.option-disabled")}
         </option>
         {provincias &&
           provincias.map((provincia, index) => {
@@ -134,7 +136,7 @@ const ClimaFiltro = () => {
         onChange={(e) => onchangeInput(e)}
         type="text"
         value={input}
-        placeholder="Type here"
+        placeholder= {t("Componente-clima-filtro.input-placeholder")}
         className="w-full px-2 max-w-xs my-2 border h-12 rounded-md mx-2 md:mx-2 "
       />
     </div>

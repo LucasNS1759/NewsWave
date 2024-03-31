@@ -1,34 +1,27 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import NewsSubscription from "../NewsSubscription/NewsSubscription";
+import { useTranslation } from "react-i18next";
+import { categories } from "../../helpers/dataFiltrosNoticias.js";
 
 const SideBar = () => {
   const navigate = useNavigate();
-  //mejora a futuro hacer un array de objetos donde la key o value no importa el orden sea en ingles y español ingles necesario para poder hacer la request al backend porque eso va a buscar y español para poder renderizar la categoria en español, tambien tener en cuenta de enviar lo necesario para q fullnews component pueda renderizar su titulo en español
-  const categories = [
-    "regional",
-    "technology",
-    "lifestyle",
-    "business",
-    "general",
-    "programming",
-    "science",
-    "entertainment",
-    "world",
-    "sports",
-    "finance",
-    "academia",
-    "politics",
-    "health",
-    "opinion",
-    "food",
-    "game",
-    "national",
-    "fashion",
-    "society",
-  ];
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [input, setInput] = useState("");
+  const { i18n, t } = useTranslation("global");
+  const [checked, setChecked] = useState(() => {
+    const localStorageValue = window.localStorage.getItem("languages");
+
+    localStorageValue ? localStorageValue : "en";
+
+    return;
+  });
+
+  const toggleChecked = () => {
+    window.localStorage.setItem("languages", !checked? "en" : "es");
+    setChecked(!checked);
+  };
+  const languaje = window.localStorage.getItem("languages");
 
   const handlerInputChange = (e) => {
     setInput(e.target.value);
@@ -47,6 +40,12 @@ const SideBar = () => {
     setInput("");
     navigate(`/FullNews?keyWords=${input}`);
   };
+
+  //USEeFECT Para que actue el cambio de idioma en consecuencia del cambio de dioma
+  useEffect(() => {
+    const localStorageValue = window.localStorage.getItem("languages");
+    i18n.changeLanguage(localStorageValue == "es" ? "es" : "en");
+  }, [window.localStorage.getItem("languages")]);
 
   return (
     <div className="flex justify-center items-center ">
@@ -72,7 +71,7 @@ const SideBar = () => {
                 <div className="h-full flex flex-col py-6 bg-white shadow-xl">
                   {/* Sidebar Header */}
                   <div className="flex items-center justify-between px-4">
-                    <h2 className="text-xl font-semibold text-black">Search</h2>
+                    <h2 className="text-xl font-semibold text-black">{t("Component-Sidebar.Search")}</h2>
                     <button
                       onClick={closeSidebar}
                       className="text-gray-500 hover:text-gray-700"
@@ -101,7 +100,7 @@ const SideBar = () => {
                       onChange={handlerInputChange}
                       value={input}
                       type="text"
-                      placeholder="Search News here..."
+                      placeholder={t("Component-Sidebar.Search News here...")}
                       className="w-2/3 p-2 border  rounded-md focus:border-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300 transition-colors duration-300 m-auto"
                     />
                     <button
@@ -124,11 +123,29 @@ const SideBar = () => {
                       </svg>
                     </button>
                   </div>
+                  {/* TOOGLE IDIOMA */}
+                  <div className=" flex flex-col items-center py-2 my-1">
+                    <label htmlFor="">{t("Component-Sidebar.Language")}</label>
+                    <input
+                      type="checkbox"
+                      className="toggle toggle-primary"
+                      checked={window.localStorage.getItem("languages") == "es"? true : false }
+                      onChange={toggleChecked}
+                    />
+                    <label htmlFor="">
+                      {window.localStorage.getItem("languages") ===
+                      "es"
+                        ? "ES"
+                        : "EN"}
+                    </label>
+                  </div>
+
                   <div className="mt-6 px-4">
-                    <p className="ml-2 text-lg text-gray-400">News</p>
+                    <p className="ml-2 text-lg text-gray-400">{t("Component-Sidebar.News")}</p>
 
                     <hr />
                   </div>
+
                   {/* Sidebar Content */}
                   <div className="mt-4 px-4 h-full overflow-auto">
                     <div className="grid xl:grid-cols-3 sm:grid-cols-2 gap-4    ">
@@ -138,14 +155,20 @@ const SideBar = () => {
                           return (
                             <div
                               key={index}
-                              className="bg-gray-50  hover:bg-gray-100  cursor-pointer   transition-colors duration-300"
+                              className="bg-gray-50  hover:bg-gray-100  cursor-pointer   transition-colors duration-300 capitalize"
                             >
-                              <Link to={`/FullNews?categoria=${categoria}`}>
+                              <Link
+                                to={`/FullNews?categoria=${Object.keys(
+                                  categoria
+                                )}`}
+                              >
                                 <p
                                   onClick={closeSidebar}
                                   className="text-lg font-semibold  text-black"
                                 >
-                                  {categoria}
+                                  {languaje === "es"
+                                    ? Object.values(categoria)
+                                    : Object.keys(categoria)}
                                 </p>
                               </Link>
                               {/* <p className="text-gray-600">Content for card 1.</p> */}
@@ -158,7 +181,9 @@ const SideBar = () => {
                           className="text-lg font-semibold  text-black"
                         >
                           <Link to={`/FullNews?categoria=${"last News"}`}>
-                            last News
+                            {languaje === "es"
+                              ? "Ultimas Noticias"
+                              : "Last News"}
                           </Link>
                         </p>
                       </div>
@@ -171,7 +196,7 @@ const SideBar = () => {
                           onClick={closeSidebar}
                           className="ml-2 text-lg  text-gray-400"
                         >
-                          Weather
+                          {t("Component-Sidebar.Weather")}
                         </p>
                       </Link>
                     </div>
@@ -184,7 +209,7 @@ const SideBar = () => {
                           onClick={closeSidebar}
                           className="ml-2 text-lg text-gray-400"
                         >
-                          Dollar
+                          {t("Component-Sidebar.Dollar")}
                         </p>
                       </Link>
                     </div>
@@ -192,7 +217,7 @@ const SideBar = () => {
                     <hr />
                   </div>
                   {/* Sidebar Footer */}
-               <NewsSubscription closeSidebar={closeSidebar}/>
+                  <NewsSubscription closeSidebar={closeSidebar} />
                 </div>
               </div>
             </section>
@@ -226,7 +251,7 @@ const SideBar = () => {
               ></path>
             </g>
           </svg>{" "}
-      Sections
+          {t("Component-Sidebar.Sections")}
         </button>
       </div>
     </div>

@@ -4,11 +4,17 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Swal from "sweetalert";
 import FormEmaIlPasswordInput from "./FormEmaIlPasswordInput";
-import RememberMeAndForgotPassword from "./RememberMeAndForgotPassword";
+
 
 const schema = yup.object().shape({
   email: yup.string().email("email invalido"),
-  password: yup.string().min(8),
+  password: yup
+    .string()
+    .min(8, "The password must be at least 8 characters long")
+    .matches(
+      /^(?=.*[A-Z])(?=.*[0-9])/,
+      "The password must contain at least 1 uppercase letter and 1 number."
+    )
 });
 
 const SingUp = () => {
